@@ -15,7 +15,6 @@ const Test = () => {
   const { state } = { state: { user: { roleId: 1, username: 'subadmin' } } };
   const isAuthenticated = true;
 
-
   // 입력값 변경 핸들러
   const handleInputChange = (event) => setInputValue(event.target.value);
   const handleUrlChange = (event) => setInputUrl(event.target.value);
@@ -73,7 +72,7 @@ const Test = () => {
 
   const handleFileClick = (filePath) => {
     TxtDownload(filePath);
-    console.log("파일 다운로드 클릭");
+    console.log('파일 다운로드 클릭');
   };
 
   // 알고리즘 실행 핸들러
@@ -134,7 +133,7 @@ const Test = () => {
       <div>학습 자료를 다운로드 가능하게</div>
       <div>크롤링한 데이터를 파인튜닝해서 사용자마다 개인AI를 가질 수 있게 생성 로직 짜야함</div>
       <div>AI를 이용해 학습자료를 바탕으로 난이도별 문제 작성</div> */}
-   
+
       <div>
         <div>
           <label>주소</label>
@@ -197,16 +196,15 @@ const Test = () => {
       <div>
         {result ? (
           <div>
-           
             {result.summary && (
-              <div>        
+              <div>
                 <p>{result.summary}</p>
               </div>
             )}
 
             {/* 크롤링 결과 반복 출력 */}
             {result.data.map((item, index) => (
-            <div key={index}>
+              <div key={index}>
                 <p>==============================================</p>
                 <p>단어: {item.word}</p>
                 <p>퀄리티: {item.quality ? 'Good' : 'Bad'}</p>
@@ -215,8 +213,8 @@ const Test = () => {
                   {item.relatedTopics && item.relatedTopics.length > 0
                     ? item.relatedTopics.join(', ')
                     : '값이 없습니다'}
-                </p>    
-                <p>==============================================</p>           
+                </p>
+                <p>==============================================</p>
                 <p>crawling 결과: {item.content}</p>
               </div>
             ))}
@@ -225,7 +223,7 @@ const Test = () => {
           <p>결과값이 없습니다.</p>
         )}
       </div>
-      </div>
+    </div>
   );
 };
 

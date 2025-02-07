@@ -9,16 +9,13 @@ export const CrawlRequest = async (url, word, deep, state, taskId) => {
   //const headers = { Authorization: `Bearer ${state?.token}` };
   //const requestUrl = `${SPRING_API_BASE_URL}/crawling`;
 
-//   try {
-//     const response = await axios.post(requestUrl, requestData, { headers });
+  //   try {
+  //     const response = await axios.post(requestUrl, requestData, { headers });
 
-//     return response;
-    try {
-        const response = await axios.post(
-          `${SPRING_API_BASE_URL}/crawling`,
-          requestData
-        );
-        return response;
+  //     return response;
+  try {
+    const response = await axios.post(`${SPRING_API_BASE_URL}/crawling`, requestData);
+    return response;
   } catch (error) {
     throw error;
   }

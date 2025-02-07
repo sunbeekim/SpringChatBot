@@ -8,10 +8,7 @@ const NavigationBar = ({ items }) => {
       <ul className="navigation-list">
         {items.map((item, index) => (
           <li key={index} className="navigation-item">
-            <Button 
-              onClick={item.onClick} 
-              className="navigation-button"
-            >
+            <Button onClick={item.onClick} className="navigation-button">
               {item.label}
             </Button>
           </li>

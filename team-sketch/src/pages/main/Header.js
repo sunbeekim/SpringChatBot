@@ -2,7 +2,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavigationBar from '../../components/naviform/NavigationBar';
 
-
 const Header = () => {
   const navigate = useNavigate();
 
@@ -11,7 +10,7 @@ const Header = () => {
     {
       label: '홈',
       onClick: () => navigate('/')
-    },   
+    },
     {
       label: '테스트',
       onClick: () => navigate('/test')
