@@ -5,6 +5,7 @@ import Header from './Header';
 import Home from '../home/Home';
 import Test from '../test/Test';
 import Test2 from '../test/Test2';
+import Test3 from '../test/Test3';
 
 const Main = () => {
   return (
@@ -15,6 +16,7 @@ const Main = () => {
           <Route path="/" element={<Home />} />
           <Route path="/test" element={<Test />} />
           <Route path="/test2" element={<Test2 />} />
+          <Route path="/test3" element={<Test3 />} />
         </Routes>
       </main>
     </div>

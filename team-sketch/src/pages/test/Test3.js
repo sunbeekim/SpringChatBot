@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
-import { LlamaChat } from '../../api/testAPI';
+import { DeepSeekChat } from '../../api/testAPI';
 import './Test2.css';
 
-const Test2 = () => {
+
+const Test3 = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const [isChatLoading, setIsChatLoading] = useState(false);
@@ -25,16 +26,18 @@ const Test2 = () => {
     setIsChatLoading(true);
 
     try {
-      const data = await LlamaChat(newMessage);
+      const data = await DeepSeekChat(newMessage);
       setMessages(prev => [...prev, { 
         role: 'assistant', 
         content: data.response 
+
       }]);
     } catch (error) {
-      console.error('LLaMA 채팅 에러:', error);
+      console.error('DeepSeek 채팅 에러:', error);
       setMessages(prev => [...prev, { 
         role: 'system', 
         content: '죄송합니다. 오류가 발생했습니다.' 
+
       }]);
     } finally {
       setIsChatLoading(false);
@@ -44,9 +47,7 @@ const Test2 = () => {
 
   return (
     <div className="chat-container">
-      <div className="chat-header">LLaMA 2 7B Chat 사용 예정? 파인튜닝용으로 그냥 사용할수도 있음 ==========
-        [현재 모델 : TinyLlama-1.1B-Chat-v1.0] ==========</div>
-
+      <div className="chat-header">DeepSeek-R1</div>
       <div className="messages-container" ref={chatContainerRef}>
         {messages.map((message, index) => (
           <div key={index} className={`message-bubble ${message.role}`}>
@@ -76,5 +77,5 @@ const Test2 = () => {
   );
 };
 
-export default Test2;
+export default Test3;
     

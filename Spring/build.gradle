@@ -45,6 +45,16 @@ dependencies {
     implementation 'jakarta.persistence:jakarta.persistence-api:3.1.0'
     implementation 'jakarta.annotation:jakarta.annotation-api:2.1.1'
 
+	implementation 'org.python:jython-standalone:2.7.3'
+
+	// Jackson 의존성 추가 (최신 버전으로 통일)
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.15.2'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.15.2'
+    
+    // HTTP 클라이언트
+    implementation 'com.squareup.okhttp3:okhttp:4.9.1'
+
 }
 
 dependencyManagement {

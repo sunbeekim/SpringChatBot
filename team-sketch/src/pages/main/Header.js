@@ -18,8 +18,13 @@ const Header = () => {
     {
       label: '테스트2',
       onClick: () => navigate('/test2')
+    },
+    {
+      label: '테스트3',
+      onClick: () => navigate('/test3')
     }
   ];
+
 
   return (
     <header>

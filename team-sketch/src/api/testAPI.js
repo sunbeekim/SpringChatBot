@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 // Spring API Base URL 설정
-const SPRING_API_BASE_URL = 'http://sunbee.world:8081/api';
+const SPRING_API_BASE_URL = 'http://sunbee.world:8080/api';
 
 export const CrawlRequest = async (url, word, deep, state, taskId) => {
   const requestData = { url, word, deep, state, taskId };
@@ -63,3 +63,24 @@ export const TxtDownload = async (filePath) => {
     throw error;
   }
 };
+
+// LLaMA 채팅 API
+export const LlamaChat = async (message) => {
+  try {
+    const response = await axios.post(`${SPRING_API_BASE_URL}/llama/chat`, { message });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// DeepSeek-R1 채팅 API
+export const DeepSeekChat = async (message) => {
+  try {
+    const response = await axios.post(`${SPRING_API_BASE_URL}/deepseek/chat`, { message });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
