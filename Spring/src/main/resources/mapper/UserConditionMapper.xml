@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="UserConditionMapper">
+    
+    <!-- 기존 크롤링 결과 저장용 -->
+    <insert id="insertCondition" parameterType="map">
+        INSERT INTO user_conditions (
+            username, 
+            search_word, 
+            table_name, 
+            mapper_path
+        ) VALUES (
+            #{username}, 
+            #{searchWord}, 
+            #{tableName}, 
+            #{mapperPath}
+        )
+    </insert>
+    
+    <!-- 캐시용 조건 저장 -->
+    <insert id="insertCacheCondition" parameterType="map">
+        INSERT INTO user_conditions (
+            username,
+            search_word,
+            deep,
+            table_name,
+            mapper_path
+        ) VALUES (
+            #{username},
+            #{searchWord},
+            #{deep},
+            #{tableName},
+            #{mapperPath}
+        )
+    </insert>
+    
+    <select id="getUserConditions" parameterType="string" resultType="map">
+        SELECT * FROM user_conditions 
+        WHERE username = #{username} 
+        ORDER BY created_at DESC
+    </select>
+    
+    <select id="findMatchingCondition" parameterType="map" resultType="map">
+        SELECT * FROM user_conditions 
+        WHERE username = #{username}
+        AND search_word = #{searchWord}
+        AND deep = #{deep}
+        ORDER BY created_at DESC 
+        LIMIT 1
+    </select>
+    
+    <select id="countMatchingConditions" parameterType="map" resultType="int">
+        SELECT COUNT(*) FROM user_conditions 
+        WHERE username = #{username}
+        AND search_word = #{searchWord}
+        AND deep = #{deep}
+    </select>
+    
+</mapper> 

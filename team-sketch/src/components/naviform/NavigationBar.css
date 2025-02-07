@@ -1,0 +1,30 @@
+.navigation-container {
+    width: 100%;
+    background-color: #f8f9fa;
+    padding: 1rem 0;
+  }
+  
+  .navigation-list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .navigation-item {
+    margin: 0;
+  }
+  
+  .navigation-button {
+    background-color: transparent;
+    color: #007bff;
+    border: none;
+    padding: 0.5rem 1rem;
+  }
+  
+  .navigation-button:hover {
+    background-color: #e9ecef;
+    color: #0056b3;
+  }
