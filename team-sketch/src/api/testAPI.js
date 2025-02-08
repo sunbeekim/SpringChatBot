@@ -83,4 +83,56 @@ export const DeepSeekChat = async (message) => {
     throw error;
   }
 };
+//===============================================================================================//
+// 규칙 목록 조회
+export const fetchRulesList = async (roleId, username) => {
+  try {
+    const response = await axios.get(`${SPRING_API_BASE_URL}/rules`, {
+      params: { roleId, username }
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 규칙 추가
+export const addRule = async (ruleData, roleId, username) => {
+  try {
+    const response = await axios.post(`${SPRING_API_BASE_URL}/rules`, {
+      ...ruleData,
+      roleId,
+      username
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 규칙 수정
+export const updateRule = async (id, ruleData, roleId, username) => {
+  try {
+    const response = await axios.put(`${SPRING_API_BASE_URL}/rules/${id}`, {
+      ...ruleData,
+      roleId,
+      username
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 규칙 삭제
+export const deleteRule = async (id, roleId, username) => {
+  try {
+    const response = await axios.delete(`${SPRING_API_BASE_URL}/rules/${id}`, {
+      params: { roleId, username }
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
 

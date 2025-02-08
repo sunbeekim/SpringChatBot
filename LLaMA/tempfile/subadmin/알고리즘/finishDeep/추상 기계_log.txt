@@ -1,0 +1,11 @@
+Full URL: https://ko.wikipedia.org/wiki/추상 기계
+HTTP Response Code: 200
+HTML Content (Preview):
+<!DOCTYPE html>
+<html class="client-nojs vector-feature-language-in-header-enabled vector-feature-language-in-main-page-header-disabled vector-feature-page-tools-pinned-disabled vector-feature-toc-pinned-clientpref-1 vector-feature-main-menu-pinned-disabled vector-feature-limited-width-clientpref-1 vector-feature-limited-width-content-enabled vector-feature-custom-font-size-clientpref-1 vector-feature-appearance-pinned-clientpref-1 vector-feature-night-mode-disabled skin-theme-clientpref-day vector-sticky-header-enabled vector-toc-available" lang="ko" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>추상 기계 - 위키백과, 우리 모두의 백과사전</title>
+<script>(function(){var className="client-js vector-feature-language-in-header-enabled vector-feature-language-in-main-page-header-disabled vector-feature-page-tools-pinned-disabled vector-feature-toc-pinned-clientpref-1 vector-feature-main-menu-pinned-disabled vector-feature-limited-width-clientpref-1 vector-feature-limited-width-content-enabled vector-feat
+'같이 보기' section found.
+Output saved to: C:\java\MainProject\newtest\LLaMA\tempfile\subadmin\알고리즘\finishDeep\추상 기계.txt

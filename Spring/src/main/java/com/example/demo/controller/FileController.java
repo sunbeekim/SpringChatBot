@@ -21,12 +21,14 @@ public class FileController {
     String filePath = (String) request.get("filePath");
 
     try {
+
       // 파일 경로 설정
       Path resolvedPath = Paths.get("C:\\java\\MainProject\\newtest\\LLaMA\\tempfile", filePath).toAbsolutePath().normalize();
       System.out.println("Resolved Path: " + resolvedPath);
-
+      
       // 디버깅용 경로 출력
       System.out.println("Resolved Path: " + resolvedPath);
+
 
       // 리소스 로드
       Resource resource = new UrlResource(resolvedPath.toUri());

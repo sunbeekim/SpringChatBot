@@ -12,6 +12,10 @@ const Header = () => {
       onClick: () => navigate('/')
     },
     {
+      label: '규칙 추가',
+      onClick: () => navigate('/rule')
+    },
+    {
       label: '테스트',
       onClick: () => navigate('/test')
     },

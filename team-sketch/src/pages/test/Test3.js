@@ -47,7 +47,9 @@ const Test3 = () => {
 
   return (
     <div className="chat-container">
-      <div className="chat-header">DeepSeek-R1</div>
+      <div className="chat-header">TheBloke/deepseek-coder-6.7B-instruct-GGUF
+        <div>DeepSeek-R1 로컬 사양 부족해서 사용 X</div>
+      </div>
       <div className="messages-container" ref={chatContainerRef}>
         {messages.map((message, index) => (
           <div key={index} className={`message-bubble ${message.role}`}>

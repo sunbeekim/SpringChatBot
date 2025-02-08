@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ChatBotRuleMapper">
+
+    <resultMap id="ruleResultMap" type="com.example.demo.model.ChatBotRule">
+        <id property="id" column="id"/>
+        <result property="type" column="type"/>
+        <result property="triggerWords" column="trigger_words"/>
+        <result property="response" column="response"/>
+        <result property="roleId" column="role_id"/>
+        <result property="username" column="username"/>
+        <result property="isApplied" column="is_applied"/>
+        <result property="appliedAt" column="applied_at"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+        <collection property="conditions" ofType="com.example.demo.model.ChatBotRuleCondition">
+            <id property="id" column="condition_id"/>
+            <result property="ruleId" column="rule_id"/>
+            <result property="conditionText" column="condition_text"/>
+            <result property="response" column="condition_response"/>
+            <result property="createdAt" column="condition_created_at"/>
+        </collection>
+    </resultMap>
+
+    <select id="getRules" resultMap="ruleResultMap">
+        SELECT r.*, 
+               c.id as condition_id,
+               c.rule_id,
+               c.condition_text,
+               c.response as condition_response,
+               c.created_at as condition_created_at
+        FROM chat_bot_rules r
+        LEFT JOIN chat_bot_rule_conditions c ON r.id = c.rule_id
+        WHERE r.role_id = #{roleId} AND r.username = #{username}
+        ORDER BY r.created_at DESC
+    </select>
+
+    <select id="getRule" resultMap="ruleResultMap">
+        SELECT r.*, 
+               c.id as condition_id,
+               c.rule_id,
+               c.condition_text,
+               c.response as condition_response,
+               c.created_at as condition_created_at
+        FROM chat_bot_rules r
+        LEFT JOIN chat_bot_rule_conditions c ON r.id = c.rule_id
+        WHERE r.id = #{id} AND r.username = #{username}
+    </select>
+
+
+    <insert id="addRule" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO chat_bot_rules (type, trigger_words, response, role_id, username)
+        VALUES (#{type}, #{triggerWords}, #{response}, #{roleId}, #{username})
+    </insert>
+
+    <insert id="addRuleCondition">
+        INSERT INTO chat_bot_rule_conditions 
+        (rule_id, condition_text, response)
+        VALUES 
+        (#{ruleId}, #{conditionText}, #{response})
+    </insert>
+
+    <update id="updateRule">
+        UPDATE chat_bot_rules
+        SET type = #{type},
+            trigger_words = #{triggerWords},
+            response = #{response},
+            updated_at = CURRENT_TIMESTAMP
+        WHERE id = #{id}
+    </update>
+
+    <update id="applyRule">
+        UPDATE chat_bot_rules
+        SET is_applied = true,
+            applied_at = CURRENT_TIMESTAMP
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteRule">
+        DELETE FROM chat_bot_rules WHERE id = #{id}
+    </delete>
+
+    <select id="getAppliedRules" resultMap="ruleResultMap">
+        SELECT r.*, 
+               c.id as condition_id,
+               c.rule_id,
+               c.condition_text,
+               c.response as condition_response,
+               c.created_at as condition_created_at
+        FROM chat_bot_rules r
+        LEFT JOIN chat_bot_rule_conditions c ON r.id = c.rule_id
+        WHERE r.is_applied = true
+        ORDER BY r.applied_at DESC
+    </select>
+
+    <delete id="deleteRuleConditions">
+        DELETE FROM chat_bot_rule_conditions 
+        WHERE rule_id = #{ruleId}
+    </delete>
+</mapper> 

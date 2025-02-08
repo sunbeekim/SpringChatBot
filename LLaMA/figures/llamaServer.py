@@ -36,13 +36,13 @@ class ChatRequest(BaseModel):
 async def chat(request: ChatRequest) -> Dict[str, str]:
     try:
         # 더 구체적인 시스템 프롬프트 설정
-        system_prompt = """당신은 지식이 풍부한 AI 어시스턴트입니다. 
-다음 규칙을 반드시 따라주세요:
-1. 항상 한국어로 명확하게 응답합니다.
-2. 이전 대화 맥락을 고려하여 일관성 있게 답변합니다.
-3. 질문과 관련 없는 내용은 답변하지 않습니다.
-4. 전문적인 내용은 정확하고 자세하게 설명합니다.
-5. 모르는 내용에 대해서는 "잘 모르겠습니다"라고 답변합니다."""
+        system_prompt = """You are a knowledgeable AI assistant. 
+
+1. Always respond clearly in Korean.
+2. Answer consistently, taking into account the context of the previous conversation.
+3. Content unrelated to the question will not be answered.
+4. Professional content is explained accurately and in detail.
+5. Answer “I don’t know” to questions you don’t know."""
 
         # 대화 히스토리를 포함한 프롬프트 구성
         full_prompt = f"<system>{system_prompt}</system>\n"

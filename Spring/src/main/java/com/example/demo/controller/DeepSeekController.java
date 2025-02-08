@@ -1,10 +1,12 @@
 package com.example.demo.controller;
 
 import com.example.demo.service.DeepSeekService;
+import com.example.demo.service.DeepSeekService.ChatMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -21,8 +23,7 @@ public class DeepSeekController {
         System.out.println("요청 데이터: " + request);
         
         String message = (String) request.get("message");
-        @SuppressWarnings("unchecked")
-        List<Map<String, String>> history = (List<Map<String, String>>) request.get("history");
+        List<ChatMessage> history = new ArrayList<>();  // 현재는 빈 히스토리로 시작
         
         String response = deepSeekService.chat(message, history);
         

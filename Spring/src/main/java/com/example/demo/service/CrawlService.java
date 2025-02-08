@@ -14,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
@@ -69,8 +70,20 @@ public class CrawlService {
       // 사용자 디렉토리를 초기 디렉토리로 설정
       Map<String, Object> user = (Map<String, Object>) state.get("user");
       String username = user.get("username").toString();
-      // 나중에 먼저 폴더 만들기 작성 코드 추가
+      
+      // 사용자별 디렉토리 경로 설정
       Path initialDirectory = Paths.get("C:\\java\\MainProject\\newtest\\LLaMA\\tempfile", username);
+      
+      // 디렉토리가 없으면 생성
+      try {
+          if (!Files.exists(initialDirectory)) {
+              Files.createDirectories(initialDirectory);
+              System.out.println("사용자 디렉토리 생성 완료: " + initialDirectory);
+          }
+      } catch (IOException e) {
+          System.err.println("디렉토리 생성 실패: " + e.getMessage());
+          throw new RuntimeException("사용자 디렉토리 생성 중 오류 발생", e);
+      }
 
       // 초기 입력값만 별도로 추가
       Set<String> words = processedWords.get();

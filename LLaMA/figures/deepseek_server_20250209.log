@@ -1,0 +1,557 @@
+2025-02-09 05:18:55,501 - INFO - 모델 로딩 중...
+2025-02-09 05:18:59,069 - INFO - 모델 로딩 완료!
+2025-02-09 05:18:59,070 - INFO - 서버 시작
+2025-02-09 05:18:59,125 - INFO - Started server process [23392]
+2025-02-09 05:18:59,126 - INFO - Waiting for application startup.
+2025-02-09 05:18:59,126 - INFO - Application startup complete.
+2025-02-09 05:18:59,126 - INFO - Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2025-02-09 05:19:19,191 - INFO - 채팅 요청 받음: message='Do you know relativity?' history=[]
+2025-02-09 05:19:19,192 - INFO - 최종 메시지: [{'role': 'system', 'content': 'You are a helpful AI assistant. Please follow these guidelines'}, {'role': 'user', 'content': 'Do you know relativity?'}]
+2025-02-09 05:19:20,100 - INFO - 응답 생성 완료: 
+2025-02-09 05:19:20,100 - ERROR - 빈 응답이 생성되었습니다
+2025-02-09 05:19:20,100 - ERROR - 에러 발생: 
+2025-02-09 05:21:45,118 - INFO - Shutting down
+2025-02-09 05:21:45,227 - INFO - Waiting for application shutdown.
+2025-02-09 05:21:45,228 - INFO - Application shutdown complete.
+2025-02-09 05:21:45,228 - INFO - Finished server process [23392]
+2025-02-09 05:21:47,516 - INFO - 모델 로딩 중...
+2025-02-09 05:21:50,895 - INFO - 모델 로딩 완료!
+2025-02-09 05:21:50,897 - INFO - 서버 시작
+2025-02-09 05:21:50,942 - INFO - Started server process [27140]
+2025-02-09 05:21:50,943 - INFO - Waiting for application startup.
+2025-02-09 05:21:50,944 - INFO - Application startup complete.
+2025-02-09 05:21:50,944 - INFO - Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2025-02-09 05:21:58,644 - INFO - 채팅 요청 받음: message='Do you know relativity?' history=[]
+2025-02-09 05:21:58,644 - INFO - 최종 메시지: [{'role': 'system', 'content': "You are a helpful AI assistant. You should:\n1. Provide accurate and informative responses\n2. Be clear and concise\n3. Be polite and professional\n4. If you're not sure about something, admit it\n5. Avoid harmful or inappropriate content\n6. Respond in the same language as the user's question\n"}, {'role': 'user', 'content': 'Do you know relativity?'}]
+2025-02-09 05:21:58,645 - INFO - 응답 생성 시작...
+2025-02-09 05:21:59,456 - INFO - Raw 응답: {'id': 'chatcmpl-c4c1ba5d-ea5b-46fd-ba3f-f89ab6957912', 'object': 'chat.completion', 'created': 1739046118, 'model': 'C:/java/deepseek-llm-7b-chat.Q4_K_M.gguf/deepseek-llm-7b-chat-q4_k_m-imat.gguf', 'choices': [{'index': 0, 'message': {'role': 'assistant', 'content': ''}, 'finish_reason': 'stop'}], 'usage': {'prompt_tokens': 92, 'completion_tokens': 0, 'total_tokens': 92}}
+2025-02-09 05:21:59,456 - INFO - 응답 생성 완료: 
+2025-02-09 05:21:59,456 - ERROR - 빈 응답이 생성되었습니다
+2025-02-09 05:21:59,456 - ERROR - 에러 발생: 
+2025-02-09 05:21:59,457 - ERROR - 상세 에러:
+Traceback (most recent call last):
+  File "C:\java\MainProject\newtest\LLaMA\figures\deepseekServer.py", line 106, in chat
+    raise HTTPException(status_code=500, detail="빈 응답이 생성되었습니다")
+fastapi.exceptions.HTTPException
+2025-02-09 05:22:12,050 - INFO - 채팅 요청 받음: message='Do you know relativity?' history=[]
+2025-02-09 05:22:12,050 - INFO - 최종 메시지: [{'role': 'system', 'content': "You are a helpful AI assistant. You should:\n1. Provide accurate and informative responses\n2. Be clear and concise\n3. Be polite and professional\n4. If you're not sure about something, admit it\n5. Avoid harmful or inappropriate content\n6. Respond in the same language as the user's question\n"}, {'role': 'user', 'content': 'Do you know relativity?'}]
+2025-02-09 05:22:12,051 - INFO - 응답 생성 시작...
+2025-02-09 05:22:12,288 - INFO - Raw 응답: {'id': 'chatcmpl-dead0702-28cd-47ea-82c8-9d0e8c71c137', 'object': 'chat.completion', 'created': 1739046132, 'model': 'C:/java/deepseek-llm-7b-chat.Q4_K_M.gguf/deepseek-llm-7b-chat-q4_k_m-imat.gguf', 'choices': [{'index': 0, 'message': {'role': 'assistant', 'content': ''}, 'finish_reason': 'stop'}], 'usage': {'prompt_tokens': 92, 'completion_tokens': 0, 'total_tokens': 92}}
+2025-02-09 05:22:12,288 - INFO - 응답 생성 완료: 
+2025-02-09 05:22:12,288 - ERROR - 빈 응답이 생성되었습니다
+2025-02-09 05:22:12,288 - ERROR - 에러 발생: 
+2025-02-09 05:22:12,288 - ERROR - 상세 에러:
+Traceback (most recent call last):
+  File "C:\java\MainProject\newtest\LLaMA\figures\deepseekServer.py", line 106, in chat
+    raise HTTPException(status_code=500, detail="빈 응답이 생성되었습니다")
+fastapi.exceptions.HTTPException
+2025-02-09 05:24:20,382 - INFO - Shutting down
+2025-02-09 05:24:20,490 - INFO - Waiting for application shutdown.
+2025-02-09 05:24:20,490 - INFO - Application shutdown complete.
+2025-02-09 05:24:20,491 - INFO - Finished server process [27140]
+2025-02-09 05:24:22,749 - INFO - 모델 로딩 중...
+2025-02-09 05:24:26,682 - INFO - 모델 로딩 완료!
+2025-02-09 05:24:26,683 - INFO - 서버 시작
+2025-02-09 05:24:26,735 - INFO - Started server process [5440]
+2025-02-09 05:24:26,736 - INFO - Waiting for application startup.
+2025-02-09 05:24:26,736 - INFO - Application startup complete.
+2025-02-09 05:24:26,737 - INFO - Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2025-02-09 05:24:47,956 - INFO - Shutting down
+2025-02-09 05:24:48,067 - INFO - Waiting for application shutdown.
+2025-02-09 05:24:48,067 - INFO - Application shutdown complete.
+2025-02-09 05:24:48,068 - INFO - Finished server process [5440]
+2025-02-09 05:24:52,641 - INFO - 모델 로딩 중...
+2025-02-09 05:24:56,415 - INFO - 모델 로딩 완료!
+2025-02-09 05:24:56,417 - INFO - 서버 시작
+2025-02-09 05:24:56,467 - INFO - Started server process [27004]
+2025-02-09 05:24:56,468 - INFO - Waiting for application startup.
+2025-02-09 05:24:56,469 - INFO - Application startup complete.
+2025-02-09 05:24:56,469 - INFO - Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2025-02-09 05:25:02,518 - INFO - 채팅 요청 받음: message='Do you know relativity?' history=[]
+2025-02-09 05:25:02,518 - INFO - 최종 프롬프트 메시지: [{'role': 'system', 'content': 'You are a helpful AI assistant. '}, {'role': 'user', 'content': 'Do you know relativity?'}]
+2025-02-09 05:25:02,944 - INFO - Raw 응답: {'id': 'chatcmpl-fa45c1ff-7621-4d3e-85f4-2d2dc868038c', 'object': 'chat.completion', 'created': 1739046302, 'model': 'C:/java/deepseek-llm-7b-chat.Q4_K_M.gguf/deepseek-llm-7b-chat-q4_k_m-imat.gguf', 'choices': [{'index': 0, 'message': {'role': 'assistant', 'content': ''}, 'finish_reason': 'stop'}], 'usage': {'prompt_tokens': 31, 'completion_tokens': 0, 'total_tokens': 31}}
+2025-02-09 05:25:02,945 - INFO - 응답 생성 완료: 
+2025-02-09 05:25:02,945 - ERROR - 빈 응답이 생성되었습니다
+2025-02-09 05:25:02,945 - ERROR - 에러 발생: 
+2025-02-09 05:25:02,945 - ERROR - 상세 에러:
+Traceback (most recent call last):
+  File "C:\java\MainProject\newtest\LLaMA\figures\deepseekServer.py", line 118, in chat
+    raise HTTPException(status_code=500, detail="빈 응답이 생성되었습니다")
+fastapi.exceptions.HTTPException
+2025-02-09 05:25:42,790 - INFO - Shutting down
+2025-02-09 05:25:42,898 - INFO - Waiting for application shutdown.
+2025-02-09 05:25:42,898 - INFO - Application shutdown complete.
+2025-02-09 05:25:42,899 - INFO - Finished server process [27004]
+2025-02-09 05:25:44,836 - INFO - 모델 로딩 중...
+2025-02-09 05:25:48,631 - INFO - 모델 로딩 완료!
+2025-02-09 05:25:48,633 - INFO - 서버 시작
+2025-02-09 05:25:48,677 - INFO - Started server process [25556]
+2025-02-09 05:25:48,677 - INFO - Waiting for application startup.
+2025-02-09 05:25:48,678 - INFO - Application startup complete.
+2025-02-09 05:25:48,679 - INFO - Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2025-02-09 05:26:01,679 - INFO - 채팅 요청 받음: message='Do you know relativity?' history=[]
+2025-02-09 05:26:01,679 - INFO - 최종 프롬프트 메시지: [{'role': 'system', 'content': "You are a helpful AI assistant. You should:\n1. Provide accurate and informative responses\n2. Be clear and concise\n3. Be polite and professional\n4. If you're not sure about something, admit it\n5. Avoid harmful or inappropriate content\n6. Respond in the same language as the user's question\n"}, {'role': 'user', 'content': 'Do you know relativity?'}]
+2025-02-09 05:26:02,595 - INFO - Raw 응답: {'id': 'chatcmpl-067a4b1b-e896-4736-bb4d-1c5c7b17963a', 'object': 'chat.completion', 'created': 1739046361, 'model': 'C:/java/deepseek-llm-7b-chat.Q4_K_M.gguf/deepseek-llm-7b-chat-q4_k_m-imat.gguf', 'choices': [{'index': 0, 'message': {'role': 'assistant', 'content': ''}, 'finish_reason': 'stop'}], 'usage': {'prompt_tokens': 92, 'completion_tokens': 0, 'total_tokens': 92}}
+2025-02-09 05:26:02,595 - INFO - 응답 생성 완료: 
+2025-02-09 05:26:02,595 - ERROR - 빈 응답이 생성되었습니다
+2025-02-09 05:26:02,595 - ERROR - 에러 발생: 
+2025-02-09 05:26:02,596 - ERROR - 상세 에러:
+Traceback (most recent call last):
+  File "C:\java\MainProject\newtest\LLaMA\figures\deepseekServer.py", line 125, in chat
+    raise HTTPException(status_code=500, detail="빈 응답이 생성되었습니다")
+fastapi.exceptions.HTTPException
+2025-02-09 05:28:54,847 - INFO - Shutting down
+2025-02-09 05:28:54,954 - INFO - Waiting for application shutdown.
+2025-02-09 05:28:54,954 - INFO - Application shutdown complete.
+2025-02-09 05:28:54,955 - INFO - Finished server process [25556]
+2025-02-09 05:29:19,750 - INFO - 모델 로딩 중...
+2025-02-09 05:29:23,333 - INFO - 모델 로딩 완료!
+2025-02-09 05:29:23,336 - INFO - 서버 시작
+2025-02-09 05:29:23,380 - INFO - Started server process [24536]
+2025-02-09 05:29:23,381 - INFO - Waiting for application startup.
+2025-02-09 05:29:23,382 - INFO - Application startup complete.
+2025-02-09 05:29:23,382 - INFO - Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2025-02-09 05:29:42,023 - INFO - 채팅 요청 받음: message='Do you know relativity?' history=[]
+2025-02-09 05:29:42,023 - INFO - 최종 프롬프트 메시지: [{'role': 'system', 'content': "You are a helpful AI assistant. You should:\n1. Provide accurate and informative responses\n2. Be clear and concise\n3. Be polite and professional\n4. If you're not sure about something, admit it\n5. Avoid harmful or inappropriate content\n6. Respond in the same language as the user's question\n"}, {'role': 'user', 'content': 'Do you know relativity?'}]
+2025-02-09 05:29:42,023 - ERROR - 에러 발생: Llama.create_chat_completion() got an unexpected keyword argument 'echo'
+2025-02-09 05:29:42,024 - ERROR - 상세 에러:
+Traceback (most recent call last):
+  File "C:\java\MainProject\newtest\LLaMA\figures\deepseekServer.py", line 101, in chat
+    response = llm.create_chat_completion(
+TypeError: Llama.create_chat_completion() got an unexpected keyword argument 'echo'
+2025-02-09 05:31:20,572 - INFO - Shutting down
+2025-02-09 05:31:20,682 - INFO - Waiting for application shutdown.
+2025-02-09 05:31:20,682 - INFO - Application shutdown complete.
+2025-02-09 05:31:20,683 - INFO - Finished server process [24536]
+2025-02-09 05:31:22,755 - INFO - 모델 로딩 중...
+2025-02-09 05:31:26,392 - INFO - 모델 로딩 완료!
+2025-02-09 05:31:26,393 - INFO - 서버 시작
+2025-02-09 05:31:26,445 - INFO - Started server process [27520]
+2025-02-09 05:31:26,445 - INFO - Waiting for application startup.
+2025-02-09 05:31:26,446 - INFO - Application startup complete.
+2025-02-09 05:31:26,446 - INFO - Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2025-02-09 05:31:37,878 - INFO - 채팅 요청 받음: message='Do you know relativity?' history=[]
+2025-02-09 05:31:37,878 - INFO - 최종 프롬프트 메시지: [{'role': 'system', 'content': "You are a helpful AI assistant. You should:\n1. Provide accurate and informative responses\n2. Be clear and concise\n3. Be polite and professional\n4. If you're not sure about something, admit it\n5. Avoid harmful or inappropriate content\n6. Respond in the same language as the user's question\n"}, {'role': 'user', 'content': 'Do you know relativity?'}]
+2025-02-09 05:31:38,712 - INFO - Raw 응답: {'id': 'chatcmpl-642be58b-5541-46dd-8154-c8008028d1fd', 'object': 'chat.completion', 'created': 1739046697, 'model': 'C:/java/deepseek-llm-7b-chat.Q4_K_M.gguf/deepseek-llm-7b-chat-q4_k_m-imat.gguf', 'choices': [{'index': 0, 'message': {'role': 'assistant', 'content': ''}, 'finish_reason': 'stop'}], 'usage': {'prompt_tokens': 92, 'completion_tokens': 0, 'total_tokens': 92}}
+2025-02-09 05:31:38,712 - INFO - 응답 생성 완료: 
+2025-02-09 05:31:38,712 - ERROR - 빈 응답이 생성되었습니다
+2025-02-09 05:31:38,712 - ERROR - 에러 발생: 
+2025-02-09 05:31:38,713 - ERROR - 상세 에러:
+Traceback (most recent call last):
+  File "C:\java\MainProject\newtest\LLaMA\figures\deepseekServer.py", line 129, in chat
+    raise HTTPException(status_code=500, detail="빈 응답이 생성되었습니다")
+fastapi.exceptions.HTTPException
+2025-02-09 05:36:58,092 - INFO - Shutting down
+2025-02-09 05:36:58,201 - INFO - Waiting for application shutdown.
+2025-02-09 05:36:58,201 - INFO - Application shutdown complete.
+2025-02-09 05:36:58,202 - INFO - Finished server process [27520]
+2025-02-09 05:37:00,464 - INFO - 모델 로딩 중...
+2025-02-09 05:37:04,193 - INFO - 모델 로딩 완료!
+2025-02-09 05:37:04,194 - INFO - 서버 시작
+2025-02-09 05:37:04,246 - INFO - Started server process [15516]
+2025-02-09 05:37:04,247 - INFO - Waiting for application startup.
+2025-02-09 05:37:04,247 - INFO - Application startup complete.
+2025-02-09 05:37:04,248 - INFO - Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2025-02-09 05:37:09,465 - INFO - 채팅 요청 받음: message='Do you know relativity?' history=[]
+2025-02-09 05:37:09,466 - INFO - 최종 프롬프트 메시지: [{'role': 'system', 'content': "You are Claude, an AI assistant created by Anthropic. Always be helpful, harmless, and honest. Respond in the same language as the user's question. If you're unsure about something, say so. Avoid harmful or inappropriate content."}, {'role': 'user', 'content': 'Do you know relativity?'}]
+2025-02-09 05:37:10,266 - INFO - Raw 응답: {'id': 'chatcmpl-d70a8edb-56ff-4173-966d-ce729682de23', 'object': 'chat.completion', 'created': 1739047029, 'model': 'C:/java/deepseek-llm-7b-chat.Q4_K_M.gguf/deepseek-llm-7b-chat-q4_k_m-imat.gguf', 'choices': [{'index': 0, 'message': {'role': 'assistant', 'content': ''}, 'finish_reason': 'stop'}], 'usage': {'prompt_tokens': 73, 'completion_tokens': 0, 'total_tokens': 73}}
+2025-02-09 05:37:10,266 - INFO - 응답 생성 완료: 
+2025-02-09 05:37:10,267 - ERROR - 빈 응답이 생성되었습니다
+2025-02-09 05:37:10,267 - ERROR - 에러 발생: 
+2025-02-09 05:37:10,267 - ERROR - 상세 에러:
+Traceback (most recent call last):
+  File "C:\java\MainProject\newtest\LLaMA\figures\deepseekServer.py", line 120, in chat
+    raise HTTPException(status_code=500, detail="빈 응답이 생성되었습니다")
+fastapi.exceptions.HTTPException
+2025-02-09 05:37:27,705 - INFO - Shutting down
+2025-02-09 05:37:27,815 - INFO - Waiting for application shutdown.
+2025-02-09 05:37:27,815 - INFO - Application shutdown complete.
+2025-02-09 05:37:27,816 - INFO - Finished server process [15516]
+2025-02-09 05:37:29,846 - INFO - 모델 로딩 중...
+2025-02-09 05:37:33,499 - INFO - 모델 로딩 완료!
+2025-02-09 05:37:33,500 - INFO - 서버 시작
+2025-02-09 05:37:33,555 - INFO - Started server process [20484]
+2025-02-09 05:37:33,555 - INFO - Waiting for application startup.
+2025-02-09 05:37:33,556 - INFO - Application startup complete.
+2025-02-09 05:37:33,556 - INFO - Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2025-02-09 05:37:38,879 - INFO - 채팅 요청 받음: message='Do you know relativity?' history=[]
+2025-02-09 05:37:38,879 - INFO - 최종 프롬프트 메시지: [{'role': 'system', 'content': "You are Claude, an AI assistant created by Anthropic. Always be helpful, harmless, and honest. Respond in the same language as the user's question. If you're unsure about something, say so. Avoid harmful or inappropriate content."}, {'role': 'user', 'content': 'Do you know relativity?'}]
+2025-02-09 05:38:54,547 - INFO - Raw 응답: {'id': 'chatcmpl-db3a42e6-4358-4ad0-8341-964973d92e1c', 'object': 'chat.completion', 'created': 1739047058, 'model': 'C:/java/deepseek-llm-7b-chat.Q4_K_M.gguf/deepseek-llm-7b-chat-q4_k_m-imat.gguf', 'choices': [{'index': 0, 'message': {'role': 'assistant', 'content': '\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n<s>>INST]\n\n<s>>SYS>>\n\n'}, 'finish_reason': 'length'}], 'usage': {'prompt_tokens': 73, 'completion_tokens': 1024, 'total_tokens': 1097}}
+2025-02-09 05:38:54,548 - INFO - 응답 생성 완료: 
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+<s>>INST]
+
+<s>>SYS>>
+
+
+2025-02-09 05:40:01,973 - INFO - Shutting down
+2025-02-09 05:40:02,082 - INFO - Waiting for application shutdown.
+2025-02-09 05:40:02,082 - INFO - Application shutdown complete.
+2025-02-09 05:40:02,082 - INFO - Finished server process [20484]
+2025-02-09 05:40:05,042 - INFO - 모델 로딩 중...
+2025-02-09 05:40:09,230 - INFO - 모델 로딩 완료!
+2025-02-09 05:40:09,231 - INFO - 서버 시작
+2025-02-09 05:40:09,287 - INFO - Started server process [22856]
+2025-02-09 05:40:09,288 - INFO - Waiting for application startup.
+2025-02-09 05:40:09,288 - INFO - Application startup complete.
+2025-02-09 05:40:09,289 - INFO - Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2025-02-09 05:40:14,218 - INFO - 채팅 요청 받음: message='Do you know relativity?' history=[]
+2025-02-09 05:40:14,218 - INFO - 최종 프롬프트 메시지: [{'role': 'system', 'content': "You are Claude, an AI assistant created by Anthropic. Always be helpful, harmless, and honest. Respond in the same language as the user's question. If you're unsure about something, say so. Avoid harmful or inappropriate content."}, {'role': 'user', 'content': 'Do you know relativity?'}]
+2025-02-09 05:40:15,006 - INFO - Raw 응답: {'id': 'chatcmpl-7043157f-2ac3-4c24-94ba-878973e4376b', 'object': 'chat.completion', 'created': 1739047214, 'model': 'C:/java/deepseek-llm-7b-chat.Q4_K_M.gguf/deepseek-llm-7b-chat-q4_k_m-imat.gguf', 'choices': [{'index': 0, 'message': {'role': 'assistant', 'content': ''}, 'finish_reason': 'stop'}], 'usage': {'prompt_tokens': 73, 'completion_tokens': 0, 'total_tokens': 73}}
+2025-02-09 05:40:15,006 - INFO - 응답 생성 완료: 
+2025-02-09 05:40:15,006 - ERROR - 빈 응답이 생성되었습니다
+2025-02-09 05:40:15,006 - ERROR - 에러 발생: 
+2025-02-09 05:40:15,006 - ERROR - 상세 에러:
+Traceback (most recent call last):
+  File "C:\java\MainProject\newtest\LLaMA\figures\deepseekServer.py", line 121, in chat
+    raise HTTPException(status_code=500, detail="빈 응답이 생성되었습니다")
+fastapi.exceptions.HTTPException
+2025-02-09 05:40:47,782 - INFO - Shutting down
+2025-02-09 05:40:47,892 - INFO - Waiting for application shutdown.
+2025-02-09 05:40:47,892 - INFO - Application shutdown complete.
+2025-02-09 05:40:47,893 - INFO - Finished server process [22856]
+2025-02-09 05:55:37,622 - INFO - 모델 로딩 중...
+2025-02-09 05:55:42,418 - INFO - 모델 로딩 완료!
+2025-02-09 05:55:42,419 - INFO - 서버 시작
+2025-02-09 05:55:42,481 - INFO - Started server process [28920]
+2025-02-09 05:55:42,481 - INFO - Waiting for application startup.
+2025-02-09 05:55:42,482 - INFO - Application startup complete.
+2025-02-09 05:55:42,482 - INFO - Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2025-02-09 05:56:26,892 - INFO - 채팅 요청 받음: message='Do you know relativity?' history=[]
+2025-02-09 05:56:26,893 - INFO - 최종 메시지: [{'role': 'system', 'content': "You are Claude, an AI assistant created by Anthropic. Always be helpful, harmless, and honest. Respond in the same language as the user's question."}, {'role': 'user', 'content': 'Do you know relativity?'}]
+2025-02-09 05:56:27,490 - INFO - Raw 응답: {'id': 'chatcmpl-5ddc0feb-33b4-4802-b0fa-e843925bc8f0', 'object': 'chat.completion', 'created': 1739048186, 'model': 'C:/java/deepseek-llm-7b-chat.Q4_K_M.gguf/deepseek-llm-7b-chat-q4_k_m-imat.gguf', 'choices': [{'index': 0, 'message': {'role': 'assistant', 'content': ''}, 'finish_reason': 'stop'}], 'usage': {'prompt_tokens': 56, 'completion_tokens': 0, 'total_tokens': 56}}
+2025-02-09 05:56:27,490 - INFO - 응답 생성 완료: 
+2025-02-09 05:56:27,490 - ERROR - 빈 응답이 생성되었습니다
+2025-02-09 05:56:27,491 - ERROR - 에러 발생: 
+2025-02-09 05:56:27,491 - ERROR - 상세 에러:
+Traceback (most recent call last):
+  File "C:\java\MainProject\newtest\LLaMA\figures\deepseekServer.py", line 99, in chat
+    raise HTTPException(status_code=500, detail="빈 응답이 생성되었습니다")
+fastapi.exceptions.HTTPException
+2025-02-09 05:57:27,866 - INFO - Shutting down
+2025-02-09 05:57:27,976 - INFO - Waiting for application shutdown.
+2025-02-09 05:57:27,976 - INFO - Application shutdown complete.
+2025-02-09 05:57:27,977 - INFO - Finished server process [28920]
+2025-02-09 05:57:35,922 - INFO - 모델 로딩 중...
+2025-02-09 05:57:39,674 - INFO - 모델 로딩 완료!
+2025-02-09 05:57:39,676 - INFO - 서버 시작
+2025-02-09 05:57:39,744 - INFO - Started server process [19836]
+2025-02-09 05:57:39,745 - INFO - Waiting for application startup.
+2025-02-09 05:57:39,748 - INFO - Application startup complete.
+2025-02-09 05:57:39,749 - INFO - Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2025-02-09 05:57:45,010 - INFO - 채팅 요청 받음: message='Do you know relativity?' history=[]
+2025-02-09 05:57:45,939 - INFO - 응답 생성 완료: 
+2025-02-09 05:58:58,045 - INFO - Shutting down
+2025-02-09 05:58:58,154 - INFO - Waiting for application shutdown.
+2025-02-09 05:58:58,154 - INFO - Application shutdown complete.
+2025-02-09 05:58:58,155 - INFO - Finished server process [19836]
+2025-02-09 05:59:01,428 - INFO - 모델 로딩 중...
+2025-02-09 05:59:05,058 - INFO - 모델 로딩 완료!
+2025-02-09 05:59:05,058 - INFO - 서버 시작
+2025-02-09 05:59:05,101 - INFO - Started server process [27124]
+2025-02-09 05:59:05,102 - INFO - Waiting for application startup.
+2025-02-09 05:59:05,103 - INFO - Application startup complete.
+2025-02-09 05:59:05,103 - INFO - Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2025-02-09 05:59:10,090 - INFO - 채팅 요청 받음: message='Do you know relativity?'
+2025-02-09 05:59:10,090 - INFO - 최종 메시지: [{'role': 'system', 'content': "You are Claude, an AI assistant created by Anthropic. Always be helpful, harmless, and honest. Respond in the same language as the user's question."}, {'role': 'user', 'content': 'Do you know relativity?'}]
+2025-02-09 05:59:10,973 - INFO - Raw 응답: {'id': 'chatcmpl-a8f81648-8d37-4e77-acd4-0d30cf3af5bf', 'object': 'chat.completion', 'created': 1739048350, 'model': 'C:/java/deepseek-llm-7b-chat.Q4_K_M.gguf/deepseek-llm-7b-chat-q4_k_m-imat.gguf', 'choices': [{'index': 0, 'message': {'role': 'assistant', 'content': ''}, 'finish_reason': 'stop'}], 'usage': {'prompt_tokens': 56, 'completion_tokens': 0, 'total_tokens': 56}}
+2025-02-09 05:59:10,973 - INFO - 응답 생성 완료: 
+2025-02-09 05:59:10,974 - ERROR - 빈 응답이 생성되었습니다
+2025-02-09 05:59:10,974 - ERROR - 에러 발생: 
+2025-02-09 05:59:10,974 - ERROR - 상세 에러:
+Traceback (most recent call last):
+  File "C:\java\MainProject\newtest\LLaMA\figures\deepseekServer.py", line 90, in chat
+    raise HTTPException(status_code=500, detail="빈 응답이 생성되었습니다")
+fastapi.exceptions.HTTPException
+2025-02-09 06:00:24,140 - INFO - Shutting down
+2025-02-09 06:00:24,251 - INFO - Waiting for application shutdown.
+2025-02-09 06:00:24,251 - INFO - Application shutdown complete.
+2025-02-09 06:00:24,252 - INFO - Finished server process [27124]

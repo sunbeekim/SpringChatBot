@@ -44,8 +44,13 @@ const Test2 = () => {
 
   return (
     <div className="chat-container">
-      <div className="chat-header">LLaMA 2 7B Chat 사용 예정? 파인튜닝용으로 그냥 사용할수도 있음 ==========
-        [현재 모델 : TinyLlama-1.1B-Chat-v1.0] ==========</div>
+      <div className="chat-header">LLaMA 2 7B Chat 사용 예정? 파인튜닝용으로 아래 모델 사용할수도 있음 
+        <div>
+          
+          [현재 모델 : TinyLlama-1.1B-Chat-v1.0] 
+        </div>
+      </div>
+
 
       <div className="messages-container" ref={chatContainerRef}>
         {messages.map((message, index) => (
