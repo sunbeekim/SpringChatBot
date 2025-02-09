@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.service.DeepSeekService;
-import com.example.demo.service.DeepSeekService.ChatMessage;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,13 +23,13 @@ public class DeepSeekController {
         System.out.println("요청 데이터: " + request);
         
         String message = (String) request.get("message");
-        List<ChatMessage> history = new ArrayList<>();  // 현재는 빈 히스토리로 시작
         
-        String response = deepSeekService.chat(message, history);
+        String response = deepSeekService.chat(message);
         
         System.out.println("DeepSeekService 응답: " + response);
         System.out.println("=== DeepSeekController 처리 완료 ===");
         
+
         return ResponseEntity.ok(Map.of("response", response));
     }
 } 

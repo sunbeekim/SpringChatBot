@@ -1,2 +1,0 @@
-Full URL: https://ko.wikipedia.org/wiki/Garbage in
-Error fetching the URL: 404 Client Error: Not Found for url: https://ko.wikipedia.org/wiki/Garbage_in

@@ -1,68 +1,65 @@
 package com.example.demo.dao.impl;
 
 import com.example.demo.dao.ChatBotRuleDAO;
+import com.example.demo.mapper.ChatBotRuleMapper;
 import com.example.demo.model.ChatBotRule;
 import com.example.demo.model.ChatBotRuleCondition;
 import lombok.RequiredArgsConstructor;
-import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-
 import java.util.List;
-import java.util.Map;
 
 @Repository
 @RequiredArgsConstructor
 public class ChatBotRuleDAOImpl implements ChatBotRuleDAO {
-    private final SqlSessionTemplate sqlSession;
-    private final String NAMESPACE = "ChatBotRuleMapper.";
+    private final ChatBotRuleMapper chatBotRuleMapper;
 
     @Override
     public List<ChatBotRule> getRules(Integer roleId, String username) {
-        return sqlSession.selectList(NAMESPACE + "getRules", Map.of("roleId", roleId, "username", username));
+        return chatBotRuleMapper.getRules(roleId, username);
     }
 
     @Override
     public ChatBotRule getRule(Long id, String username) {
-        return sqlSession.selectOne(NAMESPACE + "getRule", Map.of("id", id, "username", username));
+        return chatBotRuleMapper.getRule(id, username);
     }
 
     @Override
     public Long addRule(ChatBotRule rule) {
-        sqlSession.insert(NAMESPACE + "addRule", rule);
+        chatBotRuleMapper.addRule(rule);
         return rule.getId();
     }
 
     @Override
     public void updateRule(ChatBotRule rule) {
-        sqlSession.update(NAMESPACE + "updateRule", rule);
+        chatBotRuleMapper.updateRule(rule);
     }
 
     @Override
     public void deleteRule(Long id) {
-        sqlSession.delete(NAMESPACE + "deleteRule", id);
+        chatBotRuleMapper.deleteRule(id);
     }
 
     @Override
     public void applyRule(Long id) {
-        sqlSession.update(NAMESPACE + "applyRule", id);
+        chatBotRuleMapper.applyRule(id);
     }
 
     @Override
     public List<ChatBotRule> getAppliedRules() {
-        return sqlSession.selectList(NAMESPACE + "getAppliedRules");
+        return chatBotRuleMapper.getAppliedRules();
     }
 
     @Override
     public void addRuleConditions(Long ruleId, List<ChatBotRuleCondition> conditions) {
-    for (ChatBotRuleCondition condition : conditions) {
-        condition.setRuleId(ruleId);
-            sqlSession.insert(NAMESPACE + "addRuleCondition", condition);
+        for (ChatBotRuleCondition condition : conditions) {
+            condition.setRuleId(ruleId);
+            chatBotRuleMapper.addRuleCondition(condition);
         }
     }
 
     @Override
     public void deleteRuleConditions(Long ruleId) {
-        sqlSession.delete(NAMESPACE + "deleteRuleConditions", ruleId);
+        chatBotRuleMapper.deleteRuleConditions(ruleId);
     }
 }

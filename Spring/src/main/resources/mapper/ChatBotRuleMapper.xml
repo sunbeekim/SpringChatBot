@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="ChatBotRuleMapper">
+<mapper namespace="com.example.demo.mapper.ChatBotRuleMapper">
 
     <resultMap id="ruleResultMap" type="com.example.demo.model.ChatBotRule">
         <id property="id" column="id"/>
@@ -46,7 +46,6 @@
         LEFT JOIN chat_bot_rule_conditions c ON r.id = c.rule_id
         WHERE r.id = #{id} AND r.username = #{username}
     </select>
-
 
     <insert id="addRule" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO chat_bot_rules (type, trigger_words, response, role_id, username)

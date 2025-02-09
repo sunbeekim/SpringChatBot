@@ -1,5 +1,0 @@
-같이 보기
-힙 알고리즘(Heap's algorithm)
-
-
-스테인하우스-존슨-트로터 알고리즘(Steinhaus–Johnson–Trotter algorithm) 또는 존슨-트로터 알고리즘(Johnson–Trotter algorithm)은 플레인 변경(plain changes)으로도 불리는순열(permutohedron)알고리즘으로 n 개 요소의 모든 순열을 생성하는후고 스테인하우스(Hugo Steinhaus),셀먼 존슨(Selmer M. Johnson) 및헤일 트로터(Hale F. Trotter)의 이름을 따서 명명된 알고리즘이다. 생성하는 시퀀스의 각 순열들은 시퀀스의 인접한 두 요소를 교체하며 이전 순열과 다르다. 마찬가지로 이 알고리즘은 또한 순열(permutohedron)에서해밀턴 경로(Hamiltonian path)주기를 찾는다.
