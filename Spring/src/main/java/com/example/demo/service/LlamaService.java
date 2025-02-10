@@ -10,6 +10,8 @@ import java.nio.charset.StandardCharsets;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.util.*;
+import lombok.Data;
+import lombok.AllArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -87,19 +89,38 @@ public class LlamaService {
         return jsonResponse.get("responseData").get("translatedText").asText();
     }
 
-    public class ChatMessage {
+    @Data
+    @AllArgsConstructor
+    public static class ChatMessage {
         private String role;
         private String content;
-        // getter, setter
     }
 
     public String chat(String message, List<ChatMessage> history) {
         System.out.println("=== LlamaService 채팅 요청 시작 ===");
         System.out.println("받은 메시지: " + message);
+        System.out.println("히스토리 크기: " + history.size());
         
         try {
             // 한글 -> 영어 번역
             String translatedMessage = translate(message, "ko", "en");
+            
+            // 히스토리도 번역하여 파이썬 서버가 기대하는 형식으로 변환
+            List<Map<String, String>> translatedHistory = new ArrayList<>();
+            for (int i = 0; i < history.size(); i += 2) {
+                Map<String, String> conversation = new HashMap<>();
+                // 사용자 메시지
+                String userMessage = translate(history.get(i).getContent(), "ko", "en");
+                conversation.put("user", userMessage);
+                
+                // 어시스턴트 응답이 있는 경우
+                if (i + 1 < history.size()) {
+                    String assistantMessage = translate(history.get(i + 1).getContent(), "ko", "en");
+                    conversation.put("assistant", assistantMessage);
+                }
+                
+                translatedHistory.add(conversation);
+            }
             
             // LLaMA 서버 요청
             URL url = new URL("http://localhost:8001/chat");
@@ -110,12 +131,26 @@ public class LlamaService {
 
             String jsonInputString = objectMapper.writeValueAsString(Map.of(
                 "message", translatedMessage,
-                "history", history
+                "history", translatedHistory
             ));
             System.out.println("Python 서버로 보내는 데이터: " + jsonInputString);
             
             try (OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream())) {
                 writer.write(jsonInputString);
+            }
+
+            // 에러 응답 처리 추가
+            if (conn.getResponseCode() >= 400) {
+                try (BufferedReader br = new BufferedReader(
+                        new InputStreamReader(conn.getErrorStream(), StandardCharsets.UTF_8))) {
+                    StringBuilder errorResponse = new StringBuilder();
+                    String line;
+                    while ((line = br.readLine()) != null) {
+                        errorResponse.append(line);
+                    }
+                    System.out.println("Python 서버 에러 응답: " + errorResponse.toString());
+                    return "{\"response\": \"죄송합니다. 서버 오류가 발생했습니다.\"}";
+                }
             }
 
             // LLaMA 응답 읽기

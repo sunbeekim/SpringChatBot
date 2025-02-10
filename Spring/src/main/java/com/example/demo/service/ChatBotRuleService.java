@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -153,9 +154,16 @@ public class ChatBotRuleService {
             throw new RuntimeException("Rule not found: " + id);
         }
         
-        dto.setType((String) ruleData.get("type"));
-        dto.setTriggerWords((List<String>) ruleData.get("triggerWords"));
-        dto.setResponse((String) ruleData.get("response"));
+        // 기존 필드 업데이트
+        if (ruleData.containsKey("type")) dto.setType((String) ruleData.get("type"));
+        if (ruleData.containsKey("triggerWords")) dto.setTriggerWords((List<String>) ruleData.get("triggerWords"));
+        if (ruleData.containsKey("response")) dto.setResponse((String) ruleData.get("response"));
+        if (ruleData.containsKey("applied")) dto.setApplied((Boolean) ruleData.get("applied"));
+        if (ruleData.containsKey("appliedAt")) dto.setAppliedAt((LocalDateTime) ruleData.get("appliedAt"));
+        
+        // 수정 정보 업데이트
+        dto.setLastModifiedBy((String) ruleData.get("lastModifiedBy"));
+        dto.setLastModifiedAt((LocalDateTime) ruleData.get("lastModifiedAt"));
         
         System.out.println("수정할 DTO: " + dto);
         
@@ -221,6 +229,12 @@ public class ChatBotRuleService {
         return chatBotRuleDAO.getAppliedRules().stream()
             .map(this::convertToDTO)
             .collect(Collectors.toList());
+    }
+
+    // 규칙 적용 해제
+    @Transactional
+    public void unapplyRule(Long id) {
+        chatBotRuleDAO.unapplyRule(id);
     }
 
     private ChatBotRule getRuleEntity(Long id, String username) {

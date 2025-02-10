@@ -4,6 +4,7 @@ import com.example.demo.model.ChatBotRule;
 import com.example.demo.model.ChatBotRuleCondition;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Mapper
@@ -17,4 +18,5 @@ public interface ChatBotRuleMapper {
     List<ChatBotRule> getAppliedRules();
     void addRuleCondition(ChatBotRuleCondition condition);
     void deleteRuleConditions(@Param("ruleId") Long ruleId);
+    void unapplyRule(@Param("id") Long id);
 } 

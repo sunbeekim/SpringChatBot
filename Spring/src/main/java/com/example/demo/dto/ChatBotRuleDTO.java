@@ -16,6 +16,8 @@ public class ChatBotRuleDTO {
     private LocalDateTime appliedAt;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private String lastModifiedBy;
+    private LocalDateTime lastModifiedAt;
     private List<ChatBotRuleConditionDTO> conditions;
 }
 

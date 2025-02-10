@@ -3,11 +3,14 @@ package com.example.demo.controller;
 import com.example.demo.dto.ChatBotRuleDTO;
 import com.example.demo.service.ChatBotRuleService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 
 @RestController
 @RequiredArgsConstructor
@@ -66,5 +69,24 @@ public class ChatBotRuleController {
     public ResponseEntity<List<ChatBotRuleDTO>> getAppliedRules() {
         List<ChatBotRuleDTO> appliedRules = chatBotRuleService.getAppliedRules();
         return ResponseEntity.ok(appliedRules);
+    }
+
+    // 규칙 적용 해제
+    @PutMapping("/{id}/unapply")
+    public ResponseEntity<?> unapplyRule(
+            @PathVariable Long id,
+            @RequestParam String username
+    ) {
+        try {
+            ChatBotRuleDTO rule = chatBotRuleService.getRule(id, username);
+            if (rule == null || !username.equals(rule.getUsername())) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("권한이 없습니다.");
+            }
+            chatBotRuleService.unapplyRule(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("규칙 적용 해제 실패: " + e.getMessage());
+        }
     }
 }

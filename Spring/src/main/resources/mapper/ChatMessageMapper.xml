@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.ChatMessageDAO">
+    <insert id="saveMessage" parameterType="com.example.demo.model.ChatMessage">
+        INSERT INTO chat_messages (
+            username,
+            role_id,
+            message_type,
+            content,
+            session_id,
+            created_at
+        ) VALUES (
+            #{username},
+            #{roleId},
+            #{messageType},
+            #{content},
+            #{sessionId},
+            NOW()
+        )
+    </insert>
+</mapper> 

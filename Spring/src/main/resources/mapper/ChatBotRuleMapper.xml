@@ -9,7 +9,7 @@
         <result property="response" column="response"/>
         <result property="roleId" column="role_id"/>
         <result property="username" column="username"/>
-        <result property="isApplied" column="is_applied"/>
+        <result property="applied" column="is_applied"/>
         <result property="appliedAt" column="applied_at"/>
         <result property="createdAt" column="created_at"/>
         <result property="updatedAt" column="updated_at"/>
@@ -59,12 +59,17 @@
         (#{ruleId}, #{conditionText}, #{response})
     </insert>
 
-    <update id="updateRule">
+    <update id="updateRule" parameterType="com.example.demo.model.ChatBotRule">
         UPDATE chat_bot_rules
-        SET type = #{type},
+        SET 
+            type = #{type},
             trigger_words = #{triggerWords},
             response = #{response},
-            updated_at = CURRENT_TIMESTAMP
+            role_id = #{roleId},
+            username = #{username},
+            is_applied = #{applied},
+            applied_at = #{appliedAt},
+            updated_at = NOW()
         WHERE id = #{id}
     </update>
 
@@ -96,4 +101,13 @@
         DELETE FROM chat_bot_rule_conditions 
         WHERE rule_id = #{ruleId}
     </delete>
+
+    <update id="unapplyRule">
+        UPDATE chat_bot_rules
+        SET 
+            is_applied = false,
+            applied_at = null,
+            updated_at = NOW()
+        WHERE id = #{id}
+    </update>
 </mapper> 

@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Rule.css';
-import { fetchRulesList, addRule, updateRule, deleteRule } from '../../api/testAPI';
+import { fetchRulesList, addRule, updateRule, deleteRule, applyRule, getAppliedRules, unapplyRule } from '../../api/testAPI';
+import SimpleRule from './SimpleRule';
+import ConditionRule from './ConditionRule';
+import AppliedRules from './AppliedRules';
+
 
 const Rule = () => {
     const { state } = { state: { user: { roleId: 1, username: 'subadmin' } } };
     const isAuthenticated = true;
 
     const [rules, setRules] = useState([]);
+    const [appliedRules, setAppliedRules] = useState([]);
     const [newRule, setNewRule] = useState({
         type: 'simple',  // 'simple' 또는 'conditional'
         triggerWords: '',
@@ -24,6 +29,9 @@ const Rule = () => {
         condition: '',
         response: ''
     });
+
+    const [isSelectionMode, setIsSelectionMode] = useState(false);
+    const [selectedRules, setSelectedRules] = useState([]);
 
     const exampleRules = [
         {
@@ -90,14 +98,25 @@ const Rule = () => {
 
     useEffect(() => {
         fetchRules();
+        fetchAppliedRules();
     }, []);
 
     const fetchRules = async () => {
         try {
             const data = await fetchRulesList(state.user.roleId, state.user.username);
             setRules(data);
+            console.log(data);
         } catch (error) {
             console.error('규칙 불러오기 실패:', error);
+        }
+    };
+
+    const fetchAppliedRules = async () => {
+        try {
+            const data = await getAppliedRules();
+            setAppliedRules(data);
+        } catch (error) {
+            console.error('적용된 규칙 불러오기 실패:', error);
         }
     };
 
@@ -193,8 +212,62 @@ const Rule = () => {
         });
     };
 
+    const toggleSelectionMode = () => {
+        setIsSelectionMode(!isSelectionMode);
+        setSelectedRules([]);
+    };
+
+    const handleSelectRule = (ruleId) => {
+        setSelectedRules(prev => 
+            prev.includes(ruleId) 
+                ? prev.filter(id => id !== ruleId)
+                : [...prev, ruleId]
+        );
+    };
+
+    const handleSelectAllRules = (type) => {
+        const typeRules = rules.filter(rule => rule.type === type);
+        const typeRuleIds = typeRules.map(rule => rule.id);
+        
+        if (typeRules.every(rule => selectedRules.includes(rule.id))) {
+            setSelectedRules(prev => prev.filter(id => !typeRuleIds.includes(id)));
+        } else {
+            setSelectedRules(prev => {
+                const filteredPrev = prev.filter(id => !typeRuleIds.includes(id));
+                return [...filteredPrev, ...typeRuleIds];
+            });
+        }
+    };
+
+    const handleApplySelectedRules = async () => {
+        try {
+            for (const ruleId of selectedRules) {
+                await applyRule(ruleId, state.user.username);
+            }
+            await fetchAppliedRules();
+            setIsSelectionMode(false);
+            setSelectedRules([]);
+            alert('선택한 규칙들이 성공적으로 적용되었습니다.');
+        } catch (error) {
+            console.error('규칙 적용 실패:', error);
+            alert('규칙 적용에 실패했습니다.');
+        }
+    };
+
+    const handleUnapplyRules = async (ruleIds) => {
+        try {
+            for (const ruleId of ruleIds) {
+                await unapplyRule(ruleId, state.user.username);
+            }
+            await fetchRules();
+            await fetchAppliedRules();
+        } catch (error) {
+            console.error('규칙 적용 해제 실패:', error);
+        }
+    };
+
     return (
-        <div className="rule-container">
+        <div className="rules-container">
             <h1>챗봇 응답 규칙 관리</h1>
             
             <button 
@@ -368,99 +441,50 @@ const Rule = () => {
                 </button>
             </div>
 
-            <div className="rules-list">
-                <h2>단순 응답 규칙 목록</h2>
-                <div className="rules-table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>트리거 단어</th>
-                                <th>응답 내용</th>
-                                <th>작업</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {rules
-                                .filter(rule => rule.type === 'simple')
-                                .map((rule) => (
-                                    <tr key={rule.id}>
-                                        <td>{Array.isArray(rule.triggerWords) 
-                                            ? rule.triggerWords.join(', ') 
-                                            : rule.triggerWords}
-                                        </td>
-                                        <td>{rule.response}</td>
-                                        <td>
-                                            <button 
-                                                onClick={() => handleEditRule(rule)}
-                                                className="button-small"
-                                            >
-                                                수정
-                                            </button>
-                                            <button 
-                                                onClick={() => handleDeleteRule(rule.id)}
-                                                className="button-small delete"
-                                            >
-                                                삭제
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
-                        </tbody>
-                    </table>
-                </div>
-
-                <h2>조건부 응답 규칙 목록</h2>
-                <div className="rules-table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>트리거 단어</th>
-                                <th>조건</th>
-                                <th>조건별 응답</th>
-                                <th>기본 응답</th>
-                                <th>작업</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {rules
-                                .filter(rule => rule.type === 'conditional')
-                                .map((rule) => (
-                                    <tr key={rule.id}>
-                                        <td>{Array.isArray(rule.triggerWords) 
-                                            ? rule.triggerWords.join(', ') 
-                                            : rule.triggerWords}
-                                        </td>
-                                        <td>
-                                            {rule.conditions?.map(c => c.conditionText).join(', ')}
-                                        </td>
-                                        <td>
-                                            {rule.conditions?.map((c, i) => (
-                                                <div key={i}>
-                                                    IF "{c.conditionText}": "{c.response}"
-                                                </div>
-                                            ))}
-                                        </td>
-                                        <td>{rule.response}</td>
-                                        <td>
-                                            <button 
-                                                onClick={() => handleEditRule(rule)}
-                                                className="button-small"
-                                            >
-                                                수정
-                                            </button>
-                                            <button 
-                                                onClick={() => handleDeleteRule(rule.id)}
-                                                className="button-small delete"
-                                            >
-                                                삭제
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
-                        </tbody>
-                    </table>
-                </div>
+            <div className="rules-header">
+                <button 
+                    className="selection-button"
+                    onClick={toggleSelectionMode}
+                >
+                    {isSelectionMode ? '규칙 적용' : '규칙 선택'}
+                </button>
             </div>
+
+            <SimpleRule
+                rules={rules}
+                isSelectionMode={isSelectionMode}
+                selectedRules={selectedRules}
+                handleSelectRule={handleSelectRule}
+                handleSelectAllRules={handleSelectAllRules}
+                handleEditRule={handleEditRule}
+                handleDeleteRule={handleDeleteRule}
+            />
+
+            <ConditionRule
+                rules={rules}
+                isSelectionMode={isSelectionMode}
+                selectedRules={selectedRules}
+                handleSelectRule={handleSelectRule}
+                handleSelectAllRules={handleSelectAllRules}
+                handleEditRule={handleEditRule}
+                handleDeleteRule={handleDeleteRule}
+            />
+
+            <AppliedRules 
+                rules={appliedRules} 
+                onUnapplyRules={handleUnapplyRules}
+            />
+
+            {isSelectionMode && selectedRules.length > 0 && (
+                <div className="apply-rules-section">
+                    <button 
+                        className="apply-rules-button"
+                        onClick={handleApplySelectedRules}
+                    >
+                        선택한 규칙 적용하기 ({selectedRules.length}개)
+                    </button>
+                </div>
+            )}
 
             {openDialog && (
                 <div className="modal">

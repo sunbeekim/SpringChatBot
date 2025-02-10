@@ -7,6 +7,8 @@ import Test from '../test/Test';
 import Test2 from '../test/Test2';
 import Test3 from '../test/Test3';
 import Rule from '../test/Rule';
+import ChatBot from '../test/ChatBot';
+
 const Main = () => {
   return (
     <div>
@@ -14,6 +16,7 @@ const Main = () => {
       <main className="main-content">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/chatbot" element={<ChatBot />} />
           <Route path="/rule" element={<Rule />} />
           <Route path="/test" element={<Test />} />
           <Route path="/test2" element={<Test2 />} />

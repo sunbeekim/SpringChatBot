@@ -83,6 +83,17 @@ export const DeepSeekChat = async (message) => {
     throw error;
   }
 };
+
+// ChatBot API
+export const ChatBotChat = async (message) => {
+  try {
+    const response = await axios.post(`${SPRING_API_BASE_URL}/chatbot/chat`, { message });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 //===============================================================================================//
 // 규칙 목록 조회
 export const fetchRulesList = async (roleId, username) => {
@@ -116,7 +127,9 @@ export const updateRule = async (id, ruleData, roleId, username) => {
     const response = await axios.put(`${SPRING_API_BASE_URL}/rules/${id}`, {
       ...ruleData,
       roleId,
-      username
+      username,
+      lastModifiedBy: username,
+      lastModifiedAt: new Date().toISOString()
     });
     return response.data;
   } catch (error) {
@@ -130,6 +143,40 @@ export const deleteRule = async (id, roleId, username) => {
     const response = await axios.delete(`${SPRING_API_BASE_URL}/rules/${id}`, {
       params: { roleId, username }
     });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 규칙 적용
+export const applyRule = async (ruleId, username) => {
+  try {
+    const response = await axios.put(`${SPRING_API_BASE_URL}/rules/${ruleId}/apply`, null, {
+      params: { username }
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 규칙 적용 해제
+export const unapplyRule = async (ruleId, username) => {
+    try {
+        const response = await axios.put(`${SPRING_API_BASE_URL}/rules/${ruleId}/unapply`, null, {
+            params: { username }
+        });
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+
+// 적용된 규칙 목록 조회
+export const getAppliedRules = async () => {
+  try {
+    const response = await axios.get(`${SPRING_API_BASE_URL}/rules/applied`);
     return response.data;
   } catch (error) {
     throw error;

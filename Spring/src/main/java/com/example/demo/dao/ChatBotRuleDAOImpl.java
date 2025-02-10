@@ -62,4 +62,9 @@ public class ChatBotRuleDAOImpl implements ChatBotRuleDAO {
     public void deleteRuleConditions(Long ruleId) {
         chatBotRuleMapper.deleteRuleConditions(ruleId);
     }
+
+    @Override
+    public void unapplyRule(Long id) {
+        chatBotRuleMapper.unapplyRule(id);
+    }
 }

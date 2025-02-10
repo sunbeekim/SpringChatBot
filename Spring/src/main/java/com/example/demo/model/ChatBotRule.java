@@ -16,5 +16,7 @@ public class ChatBotRule {
     private LocalDateTime appliedAt;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private String lastModifiedBy;
+    private LocalDateTime lastModifiedAt;
     private List<ChatBotRuleCondition> conditions;
 } 

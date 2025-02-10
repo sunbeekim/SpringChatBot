@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ import java.util.Map;
 public class LlamaController {
 
     private final LlamaService llamaService;
+    private final Map<String, List<ChatMessage>> chatHistories = new HashMap<>();
 
     @PostMapping("/chat")
     public ResponseEntity<Map<String, String>> chat(@RequestBody Map<String, Object> request) {
@@ -23,10 +25,26 @@ public class LlamaController {
         System.out.println("요청 데이터: " + request);
         
         String message = (String) request.get("message");
-        List<ChatMessage> history = new ArrayList<>();  // 현재는 빈 히스토리로 시작
+        String sessionId = request.getOrDefault("sessionId", "default").toString();
+        
+        // 세션별 히스토리 관리
+        List<ChatMessage> history = chatHistories.computeIfAbsent(sessionId, k -> new ArrayList<>());
         
         String response = llamaService.chat(message, history);
         
+        // 히스토리 업데이트
+        ChatMessage userMessage = new ChatMessage("user", message);
+        ChatMessage assistantMessage = new ChatMessage("assistant", response);
+        history.add(userMessage);
+        history.add(assistantMessage);
+        
+        // 히스토리 크기 제한 (최근 10개 메시지만 유지)
+        if (history.size() > 10) {
+            history = history.subList(history.size() - 10, history.size());
+            chatHistories.put(sessionId, history);
+        }
+        
+        System.out.println("히스토리 크기: " + history.size());
         System.out.println("LlamaService 응답: " + response);
         System.out.println("=== LlamaController 처리 완료 ===");
         

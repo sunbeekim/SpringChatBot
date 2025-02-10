@@ -14,4 +14,5 @@ public interface ChatBotRuleDAO {
     List<ChatBotRule> getAppliedRules();
     void addRuleConditions(Long ruleId, List<ChatBotRuleCondition> conditions);
     void deleteRuleConditions(Long ruleId);
+    void unapplyRule(Long id);
 } 

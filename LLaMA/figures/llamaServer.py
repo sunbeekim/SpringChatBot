@@ -42,20 +42,32 @@ async def chat(request: ChatRequest) -> Dict[str, str]:
 2. Answer consistently, taking into account the context of the previous conversation.
 3. Content unrelated to the question will not be answered.
 4. Professional content is explained accurately and in detail.
-5. Answer “I don’t know” to questions you don’t know."""
+5. Answer "I don't know" to questions you don't know."""
 
         # 대화 히스토리를 포함한 프롬프트 구성
         full_prompt = f"<system>{system_prompt}</system>\n"
         
+        print("\n=== 대화 히스토리 시작 ===")
+        print(f"히스토리 메시지 수: {len(request.history)}")
+        
         # 이전 대화 내용 추가 (최근 4개 메시지만 사용)
-        for msg in request.history[-4:]:
+        for i, msg in enumerate(request.history[-4:]):
+            print(f"\n메시지 {i+1}:")
+            print(f"사용자: {msg['user']}")
+            if 'assistant' in msg:
+                print(f"어시스턴트: {msg['assistant']}")
             full_prompt += f"<user>{msg['user']}</user>\n"
             if 'assistant' in msg:
                 full_prompt += f"<assistant>{msg['assistant']}</assistant>\n"
         
         # 현재 메시지 추가
+        print(f"\n현재 메시지: {request.message}")
         full_prompt += f"<user>{request.message}</user>\n<assistant>"
         
+        print("\n=== 최종 프롬프트 ===")
+        print(full_prompt)
+        print("=====================\n")
+
         # 입력 메시지 토큰화
         inputs = tokenizer(full_prompt, return_tensors="pt").to(model.device)
         
