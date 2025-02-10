@@ -29,7 +29,7 @@ public class ChatBotRequestService {
         String response = generateResponse(message, rules);
         
         // 챗봇 응답 저장
-        saveMessage(username, roleId, "assistant", response, sessionId);
+        saveMessage("assistant", 0, "assistant", response, sessionId);
         
         return response;
     }
@@ -47,32 +47,26 @@ public class ChatBotRequestService {
     }
     
     private String generateResponse(String message, List<ChatBotRuleDTO> rules) {
-        // 메시지와 규칙을 매칭하여 적절한 응답 생성
         for (ChatBotRuleDTO rule : rules) {
-            if (matchesRule(message, rule)) {
-                return getResponseFromRule(message, rule);
+            // 트리거 단어 체크
+            if (rule.getTriggerWords().stream()
+                    .anyMatch(trigger -> message.toLowerCase().contains(trigger.toLowerCase()))) {
+                
+                // 조건부 응답 체크
+                if ("conditional".equals(rule.getType()) && rule.getConditions() != null) {
+                    for (ChatBotRuleConditionDTO condition : rule.getConditions()) {
+                        if (message.toLowerCase().contains(
+                                condition.getConditionText().toLowerCase())) {
+                            return condition.getResponse();
+                        }
+                    }
+                }
+                
+                // 기본 응답 반환
+                return rule.getResponse();
             }
         }
-        return "죄송합니다. 적절한 응답을 찾을 수 없습니다.";
-    }
-    
-    private boolean matchesRule(String message, ChatBotRuleDTO rule) {
-        // 규칙의 트리거 단어들과 메시지 매칭
-        return rule.getTriggerWords().stream()
-                  .anyMatch(trigger -> message.toLowerCase().contains(trigger.toLowerCase()));
-    }
-    
-    private String getResponseFromRule(String message, ChatBotRuleDTO rule) {
-        if ("simple".equals(rule.getType())) {
-            return rule.getResponse();
-        } else if ("conditional".equals(rule.getType())) {
-            // 조건부 응답 처리
-            return rule.getConditions().stream()
-                      .filter(condition -> message.toLowerCase().contains(condition.getConditionText().toLowerCase()))
-                      .findFirst()
-                      .map(ChatBotRuleConditionDTO::getResponse)
-                      .orElse(rule.getResponse());
-        }
-        return rule.getResponse();
+        
+        return "죄송합니다. 해당 요청에 대한 답변을 찾을 수 없습니다.";
     }
 } 

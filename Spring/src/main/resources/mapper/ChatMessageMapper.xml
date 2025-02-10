@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.demo.dao.ChatMessageDAO">
-    <insert id="saveMessage" parameterType="com.example.demo.model.ChatMessage">
+<mapper namespace="com.example.demo.mapper.ChatMessageMapper">
+    <insert id="saveMessage" parameterType="com.example.demo.model.ChatMessage" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO chat_messages (
             username,
             role_id,
@@ -18,4 +18,11 @@
             NOW()
         )
     </insert>
+
+    <select id="getMessagesBySessionId" resultType="com.example.demo.model.ChatMessage">
+        SELECT * FROM chat_messages 
+        WHERE session_id = #{sessionId} 
+        ORDER BY created_at ASC
+    </select>
+
 </mapper> 
