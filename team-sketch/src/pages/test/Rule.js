@@ -95,6 +95,7 @@ const Rule = () => {
     ];
 
     useEffect(() => {
+        console.log("패치룰");
         fetchRules();
         fetchAppliedRules();
     }, []);
@@ -242,13 +243,14 @@ const Rule = () => {
             for (const ruleId of selectedRules) {
                 await applyRule(ruleId, state.user.username);
             }
-            await fetchAppliedRules();
+            await fetchRules();        // 규칙 목록 업데이트
+            await fetchAppliedRules(); // 적용된 규칙 목록 업데이트
             setIsSelectionMode(false);
             setSelectedRules([]);
-            alert('선택한 규칙들이 성공적으로 적용되었습니다.');
+    
         } catch (error) {
             console.error('규칙 적용 실패:', error);
-            alert('규칙 적용에 실패했습니다.');
+           
         }
     };
 
@@ -257,10 +259,11 @@ const Rule = () => {
             for (const ruleId of ruleIds) {
                 await unapplyRule(ruleId, state.user.username);
             }
-            await fetchRules();
-            await fetchAppliedRules();
+            await fetchRules();        // 규칙 목록 업데이트
+            await fetchAppliedRules(); // 적용된 규칙 목록 업데이트
         } catch (error) {
             console.error('규칙 적용 해제 실패:', error);
+           
         }
     };
 
