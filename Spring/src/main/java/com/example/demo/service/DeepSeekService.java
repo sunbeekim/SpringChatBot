@@ -17,13 +17,17 @@ public class DeepSeekService {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
     private static final String DEEPSEEK_URL = "http://localhost:8000/chat";
+    private final Map<String, List<Map<String, String>>> chatHistories = new HashMap<>();
 
     private String translate(String text, String sourceLang, String targetLang) {
         try {
             String encodedText = URLEncoder.encode(text, StandardCharsets.UTF_8);
+            String apiKey = "5431a4570f453332ff03";
+            String email = "rlatjsql12@gmail.com";
+            
             String urlStr = String.format(
-                "https://api.mymemory.translated.net/get?q=%s&langpair=%s|%s",
-                encodedText, sourceLang, targetLang
+                "https://api.mymemory.translated.net/get?q=%s&langpair=%s|%s&key=%s&de=%s",
+                encodedText, sourceLang, targetLang, apiKey, email
             );
             
             URL url = new URL(urlStr);
@@ -48,11 +52,14 @@ public class DeepSeekService {
         }
     }
 
-    public String chat(String message) {
+    public String chat(String message, String sessionId) {
         System.out.println("=== DeepSeekService 채팅 요청 시작 ===");
         System.out.println("받은 메시지: " + message);
         
         try {
+            // 세션별 히스토리 관리
+            List<Map<String, String>> history = chatHistories.computeIfAbsent(sessionId, k -> new ArrayList<>());
+            
             // 한글 -> 영어 번역
             String translatedMessage = translate(message, "ko", "en");
             System.out.println("영어로 번역된 메시지: " + translatedMessage);
@@ -63,8 +70,9 @@ public class DeepSeekService {
             conn.setRequestProperty("Content-Type", "application/json");
             conn.setDoOutput(true);
 
-            Map<String, String> requestBody = new HashMap<>();
+            Map<String, Object> requestBody = new HashMap<>();
             requestBody.put("message", translatedMessage);
+            requestBody.put("history", history);
 
             String jsonInputString = objectMapper.writeValueAsString(requestBody);
             System.out.println("Python 서버로 보내는 데이터: " + jsonInputString);
@@ -90,6 +98,18 @@ public class DeepSeekService {
             // 영어 -> 한글 번역
             String koreanResponse = translate(englishResponse, "en", "ko");
             System.out.println("한글 번역 응답: " + koreanResponse);
+
+            // 히스토리 업데이트
+            Map<String, String> conversation = new HashMap<>();
+            conversation.put("user", translatedMessage);
+            conversation.put("assistant", englishResponse);
+            history.add(conversation);
+
+            // 히스토리 크기 제한 (최근 5개 대화만 유지)
+            if (history.size() > 5) {
+                history = history.subList(history.size() - 5, history.size());
+                chatHistories.put(sessionId, history);
+            }
 
             return koreanResponse;
 

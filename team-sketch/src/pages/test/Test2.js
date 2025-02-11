@@ -16,6 +16,7 @@ const Test2 = () => {
         role: 'assistant', 
         content: data.response 
       }]);
+      console.log(data.response);
     } catch (error) {
       console.error('LLaMA 채팅 에러:', error);
       setMessages(prev => [...prev, { 

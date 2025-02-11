@@ -67,15 +67,22 @@ public class LlamaService {
 
     private String translateChunk(String text, String sourceLang, String targetLang) throws Exception {
         String encodedText = URLEncoder.encode(text, StandardCharsets.UTF_8);
+        String apiKey = "5431a4570f453332ff03";
+        String email = "rlatjsql12@gmail.com";
+        
         String urlStr = String.format(
-            "https://api.mymemory.translated.net/get?q=%s&langpair=%s|%s",
-            encodedText, sourceLang, targetLang
+            "https://api.mymemory.translated.net/get?q=%s&langpair=%s|%s&key=%s&de=%s",
+            encodedText, sourceLang, targetLang, apiKey, email
         );
         
         URL url = new URL(urlStr);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
-
+        conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36");
+        
+        // 요청 간격 조절 (0.5초)
+        Thread.sleep(500);
+        
         StringBuilder response = new StringBuilder();
         try (BufferedReader br = new BufferedReader(
                 new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8))) {
@@ -86,7 +93,17 @@ public class LlamaService {
         }
 
         JsonNode jsonResponse = objectMapper.readTree(response.toString());
-        return jsonResponse.get("responseData").get("translatedText").asText();
+        String translatedText = jsonResponse.get("responseData").get("translatedText").asText();
+        
+        // JSON 형식이 포함된 경우 제거
+        if (translatedText.startsWith("{\"response\":")) {
+            translatedText = translatedText.substring(12, translatedText.length() - 2);
+        }
+        
+        // 불필요한 이스케이프 문자와 따옴표 제거
+        translatedText = translatedText.replace("\\", "").replace("\"", "");
+        
+        return translatedText;
     }
 
     @Data
@@ -163,27 +180,22 @@ public class LlamaService {
                 }
             }
 
-            // JSON 응답 파싱 - 여기서 에러가 발생하면 원본 응답 반환
-            try {
-                JsonNode jsonResponse = objectMapper.readTree(response.toString());
-                String englishResponse = jsonResponse.get("response").asText();
-                System.out.println("영어 응답: " + englishResponse);
+            // JSON 응답 파싱
+            JsonNode jsonResponse = objectMapper.readTree(response.toString());
+            String englishResponse = jsonResponse.get("response").asText();
+            System.out.println("영어 응답: " + englishResponse);
 
-                // 영어 -> 한글 번역
-                String koreanResponse = translate(englishResponse, "en", "ko");
-                System.out.println("한글 번역 응답: " + koreanResponse);
+            // 영어 -> 한글 번역
+            String koreanResponse = translate(response.toString(), "en", "ko");
+            System.out.println("한글 번역 응답: " + koreanResponse);
 
-                return objectMapper.writeValueAsString(Map.of("response", koreanResponse));
-            } catch (Exception e) {
-                System.out.println("JSON 파싱 실패, 원본 응답 반환");
-                return response.toString(); // LLaMA 서버의 원본 응답을 그대로 반환
-            }
+            return koreanResponse;  // JSON 감싸지 않고 직접 반환
             
         } catch (Exception e) {
             System.out.println("=== LlamaService 에러 발생 ===");
             System.out.println("에러 메시지: " + e.getMessage());
             e.printStackTrace();
-            return "{\"response\": \"죄송합니다. 오류가 발생했습니다: " + e.getMessage() + "\"}";
+            return "죄송합니다. 오류가 발생했습니다: " + e.getMessage();
         }
     }
 } 

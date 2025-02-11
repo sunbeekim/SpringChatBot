@@ -4,6 +4,7 @@ import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
 from llama_cpp import Llama
 import logging
+from typing import List, Dict
 
 # 기본 로깅 설정
 logging.basicConfig(level=logging.INFO)
@@ -33,14 +34,19 @@ llm = Llama(
 # 요청 모델 정의
 class ChatRequest(BaseModel):
     message: str
+    history: List[Dict[str, str]] = []
 
 @app.post("/chat")
 async def chat(request: ChatRequest):
     try:
         logger.info(f"받은 메시지: {request.message}")
+        logger.info(f"대화 기록: {request.history}")
         
-        # 단순한 프롬프트 형식 사용
-        prompt = f"Human: {request.message}\n\nAssistant:"
+        # 대화 기록을 포함한 프롬프트 생성
+        prompt = ""
+        for conv in request.history:
+            prompt += f"Human: {conv['user']}\nAssistant: {conv['assistant']}\n\n"
+        prompt += f"Human: {request.message}\n\nAssistant:"
         
         response = llm.create_completion(
             prompt=prompt,

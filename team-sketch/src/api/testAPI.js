@@ -68,7 +68,7 @@ export const TxtDownload = async (filePath) => {
 export const LlamaChat = async (message) => {
   try {
     const response = await axios.post(`${SPRING_API_BASE_URL}/llama/chat`, { message });
-    return response.data;
+    return response.data; 
   } catch (error) {
     throw error;
   }
@@ -78,7 +78,7 @@ export const LlamaChat = async (message) => {
 export const DeepSeekChat = async (message) => {
   try {
     const response = await axios.post(`${SPRING_API_BASE_URL}/deepseek/chat`, { message });
-    return response.data;
+    return response.data; 
   } catch (error) {
     throw error;
   }

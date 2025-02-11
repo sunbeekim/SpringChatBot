@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import './Rule.css';
+
 import { fetchRulesList, addRule, updateRule, deleteRule, applyRule, getAppliedRules, unapplyRule } from '../../api/testAPI';
 import SimpleRule from './SimpleRule';
 import ConditionRule from './ConditionRule';
@@ -9,7 +8,6 @@ import AppliedRules from './AppliedRules';
 
 const Rule = () => {
     const { state } = { state: { user: { roleId: 1, username: 'subadmin' } } };
-    const isAuthenticated = true;
 
     const [rules, setRules] = useState([]);
     const [appliedRules, setAppliedRules] = useState([]);
@@ -266,188 +264,236 @@ const Rule = () => {
         }
     };
 
+    const getUnappliedSelectedCount = () => {
+        return selectedRules.filter(id => {
+            const rule = rules.find(r => r.id === id);
+            return rule && !rule.applied;
+        }).length;
+    };
+
     return (
-        <div className="rules-container">
-            <h1>챗봇 응답 규칙 관리</h1>
-            
-            <button 
-                onClick={() => setShowExample(!showExample)} 
-                className="button example-button"
-            >
-                {showExample ? '예시 숨기기' : '예시 보기'}
-            </button>
+        <div className="container py-4">
+            <div className="row mb-4">
+                <div className="col">
+                    <h1 className="mb-3">챗봇 응답 규칙 관리</h1>
+                    <button 
+                        onClick={() => setShowExample(!showExample)} 
+                        className="btn btn-outline-primary"
+                    >
+                        {showExample ? '예시 숨기기' : '예시 보기'}
+                    </button>
+                </div>
+            </div>
 
             {showExample && (
-                <div className="example-rules">
-                    <h2>단순 응답 규칙 예시</h2>
-                    <div className="rules-table">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>트리거 단어</th>
-                                    <th>응답 내용</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {exampleRules
-                                    .filter(rule => rule.type === 'simple')
-                                    .map((rule, index) => (
-                                        <tr key={index}>
-                                            <td>{rule.triggerWords}</td>
-                                            <td>{rule.response}</td>
-                                        </tr>
-                                    ))
-                                }
-                            </tbody>
-                        </table>
-                    </div>
+                <div className="card mb-4">
+                    <div className="card-body">
+                        <h2 className="card-title mb-3">단순 응답 규칙 예시</h2>
+                        <div className="table-responsive">
+                            <table className="table table-striped table-hover">
+                                <thead className="table-primary">
+                                    <tr>
+                                        <th>트리거 단어</th>
+                                        <th>응답 내용</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {exampleRules
+                                        .filter(rule => rule.type === 'simple')
+                                        .map((rule, index) => (
+                                            <tr key={index}>
+                                                <td>{rule.triggerWords}</td>
+                                                <td>{rule.response}</td>
+                                            </tr>
+                                        ))
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
 
-                    <h2>조건부 응답 규칙 예시</h2>
-                    <div className="rules-table">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>트리거 단어</th>
-                                    <th>조건</th>
-                                    <th>조건별 응답</th>
-                                    <th>기본 응답</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {exampleRules
-                                    .filter(rule => rule.type === 'conditional')
-                                    .map((rule, index) => (
-                                        <tr key={index}>
-                                            <td>{rule.triggerWords}</td>
-                                            <td>
-                                                {rule.conditions.map(c => c.condition).join(', ')}
-                                            </td>
-                                            <td>
-                                                {rule.conditions.map((c, i) => (
-                                                    <div key={i}>
-                                                        IF "{c.condition}": "{c.response}"
-                                                    </div>
-                                                ))}
-                                            </td>
-                                            <td>{rule.response}</td>
-                                        </tr>
-                                    ))
-                                }
-                            </tbody>
-                        </table>
+                        <h2 className="card-title mt-4 mb-3">조건부 응답 규칙 예시</h2>
+                        <div className="table-responsive">
+                            <table className="table table-striped table-hover">
+                                <thead className="table-primary">
+                                    <tr>
+                                        <th>트리거 단어</th>
+                                        <th>조건</th>
+                                        <th>조건별 응답</th>
+                                        <th>기본 응답</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {exampleRules
+                                        .filter(rule => rule.type === 'conditional')
+                                        .map((rule, index) => (
+                                            <tr key={index}>
+                                                <td>{rule.triggerWords}</td>
+                                                <td>{rule.conditions.map(c => c.condition).join(', ')}</td>
+                                                <td>
+                                                    {rule.conditions.map((c, i) => (
+                                                        <div key={i} className="mb-1">
+                                                            <small className="text-muted">IF</small> "{c.condition}": 
+                                                            <br />
+                                                            <span className="ms-2">"{c.response}"</span>
+                                                        </div>
+                                                    ))}
+                                                </td>
+                                                <td>{rule.response}</td>
+                                            </tr>
+                                        ))
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             )}
-            
-            <div className="rule-form">
-                <select
-                    value={newRule.type}
-                    onChange={(e) => setNewRule({...newRule, type: e.target.value})}
-                    className="select-field"
-                >
-                    <option value="simple">단순 응답</option>
-                    <option value="conditional">조건부 응답</option>
-                </select>
 
-                <input
-                    type="text"
-                    placeholder="트리거 단어들 (쉼표로 구분)"
-                    value={newRule.triggerWords}
-                    onChange={(e) => setNewRule({...newRule, triggerWords: e.target.value})}
-                    className="input-field"
-                />
+            <div className="card mb-4">
+                <div className="card-body">
+                    <h3 className="card-title mb-3">새 규칙 추가</h3>
+                    <div className="mb-3">
+                        <select
+                            value={newRule.type}
+                            onChange={(e) => setNewRule({...newRule, type: e.target.value})}
+                            className="form-select"
+                        >
+                            <option value="simple">단순 응답</option>
+                            <option value="conditional">조건부 응답</option>
+                        </select>
+                    </div>
 
-                {newRule.type === 'conditional' ? (
-                    <div className="conditions-container">
-                        <h3>조건부 응답 목록</h3>
-                        {newRule.conditions.map((condition, index) => (
-                            <div key={index} className="condition-item">
-                                <p>IF "{condition.condition}" THEN "{condition.response}"</p>
+                    <div className="mb-3">
+                        <input
+                            type="text"
+                            placeholder="트리거 단어들을 쉼표로 구분하여 입력하세요"
+                            value={newRule.triggerWords}
+                            onChange={(e) => setNewRule({...newRule, triggerWords: e.target.value})}
+                            className="form-control"
+                        />
+                    </div>
+
+                    {newRule.type === 'conditional' ? (
+                        <div className="mb-3">
+                            <div className="d-flex justify-content-between align-items-center mb-2">
+                                <h4 className="mb-0">조건들</h4>
                                 <button 
-                                    onClick={() => handleRemoveCondition(index)}
-                                    className="button-small delete"
+                                    onClick={() => setShowConditionForm(true)}
+                                    className="btn btn-outline-primary btn-sm"
                                 >
-                                    삭제
+                                    조건 추가
                                 </button>
                             </div>
-                        ))}
-                        
-                        {showConditionForm ? (
-                            <div className="condition-form">
-                                <input
-                                    type="text"
-                                    placeholder="조건 단어"
-                                    value={newCondition.condition}
-                                    onChange={(e) => setNewCondition({
-                                        ...newCondition,
-                                        condition: e.target.value
-                                    })}
-                                    className="input-field"
-                                />
-                                <textarea
-                                    placeholder="조건 응답"
-                                    value={newCondition.response}
-                                    onChange={(e) => setNewCondition({
-                                        ...newCondition,
-                                        response: e.target.value
-                                    })}
-                                    className="textarea-field"
-                                    rows="2"
-                                />
-                                <div className="button-group">
-                                    <button onClick={handleAddCondition} className="button-small">
-                                        조건 추가
-                                    </button>
-                                    <button 
-                                        onClick={() => setShowConditionForm(false)}
-                                        className="button-small"
-                                    >
-                                        취소
-                                    </button>
-                                </div>
-                            </div>
-                        ) : (
-                            <button 
-                                onClick={() => setShowConditionForm(true)}
-                                className="button-small"
-                            >
-                                새 조건 추가
-                            </button>
-                        )}
 
-                        <div className="default-response">
-                            <h3>기본 응답</h3>
+                            {showConditionForm && (
+                                <div className="card mb-3">
+                                    <div className="card-body">
+                                        <div className="mb-2">
+                                            <input
+                                                type="text"
+                                                placeholder="조건을 입력하세요"
+                                                value={newCondition.condition}
+                                                onChange={(e) => setNewCondition({
+                                                    ...newCondition,
+                                                    condition: e.target.value
+                                                })}
+                                                className="form-control mb-2"
+                                            />
+                                            <textarea
+                                                placeholder="조건에 해당하는 응답을 입력하세요"
+                                                value={newCondition.response}
+                                                onChange={(e) => setNewCondition({
+                                                    ...newCondition,
+                                                    response: e.target.value
+                                                })}
+                                                className="form-control mb-2"
+                                                rows="2"
+                                            />
+                                            <div className="d-flex justify-content-end gap-2">
+                                                <button 
+                                                    onClick={() => setShowConditionForm(false)}
+                                                    className="btn btn-outline-secondary"
+                                                >
+                                                    취소
+                                                </button>
+                                                <button 
+                                                    onClick={handleAddCondition}
+                                                    className="btn btn-primary"
+                                                >
+                                                    추가
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {newRule.conditions.map((condition, index) => (
+                                <div key={index} className="card mb-2">
+                                    <div className="card-body">
+                                        <div className="d-flex justify-content-between align-items-start">
+                                            <div>
+                                                <div className="fw-bold">조건: {condition.condition}</div>
+                                                <div>응답: {condition.response}</div>
+                                            </div>
+                                            <button 
+                                                onClick={() => handleRemoveCondition(index)}
+                                                className="btn btn-outline-danger btn-sm"
+                                            >
+                                                삭제
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+
+                            <div className="mb-3">
+                                <h4>기본 응답</h4>
+                                <textarea
+                                    placeholder="조건에 해당하지 않을 때의 기본 응답을 입력하세요"
+                                    value={newRule.response}
+                                    onChange={(e) => setNewRule({...newRule, response: e.target.value})}
+                                    className="form-control"
+                                    rows="3"
+                                />
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="mb-3">
                             <textarea
-                                placeholder="조건에 해당하지 않을 때의 기본 응답을 입력하세요"
+                                placeholder="응답 내용을 입력하세요"
                                 value={newRule.response}
                                 onChange={(e) => setNewRule({...newRule, response: e.target.value})}
-                                className="textarea-field"
-                                rows="4"
+                                className="form-control"
+                                rows="3"
                             />
                         </div>
-                    </div>
-                ) : (
-                    <textarea
-                        placeholder="응답 내용을 입력하세요"
-                        value={newRule.response}
-                        onChange={(e) => setNewRule({...newRule, response: e.target.value})}
-                        className="textarea-field"
-                        rows="4"
-                    />
-                )}
+                    )}
 
-                <button onClick={handleAddRule} className="button">
-                    규칙 추가
-                </button>
+                    <button 
+                        onClick={handleAddRule} 
+                        className="btn btn-primary"
+                    >
+                        규칙 추가
+                    </button>
+                </div>
             </div>
 
-            <div className="rules-header">
+            <div className="d-flex justify-content-between align-items-center mb-3">
                 <button 
-                    className="selection-button"
+                    className="btn btn-outline-primary"
                     onClick={toggleSelectionMode}
                 >
                     {isSelectionMode ? '규칙 적용' : '규칙 선택'}
                 </button>
+                {isSelectionMode && selectedRules.length > 0 && (
+                    <button 
+                        className="btn btn-success"
+                        onClick={handleApplySelectedRules}
+                    >
+                        선택한 규칙 적용하기 ({getUnappliedSelectedCount()}개)
+                    </button>
+                )}
             </div>
 
             <SimpleRule
@@ -475,140 +521,60 @@ const Rule = () => {
                 onUnapplyRules={handleUnapplyRules}
             />
 
-            {isSelectionMode && selectedRules.length > 0 && (
-                <div className="apply-rules-section">
-                    <button 
-                        className="apply-rules-button"
-                        onClick={handleApplySelectedRules}
-                    >
-                        선택한 규칙 적용하기 ({selectedRules.length}개)
-                    </button>
-                </div>
-            )}
-
-            {openDialog && (
-                <div className="modal">
-                    <div className="modal-content">
-                        <h2>규칙 수정</h2>
-                        <input
-                            type="text"
-                            placeholder="트리거 단어들 (쉼표로 구분)"
-                            value={selectedRule.triggerWords}
-                            onChange={(e) => setSelectedRule({
-                                ...selectedRule, 
-                                triggerWords: e.target.value
-                            })}
-                            className="input-field"
-                        />
-                        
-                        {selectedRule.type === 'conditional' ? (
-                            <div className="conditions-container">
-                                <h3>조건부 응답 목록</h3>
-                                {selectedRule.conditions?.map((condition, index) => (
-                                    <div key={index} className="condition-item">
-                                        <input
-                                            type="text"
-                                            placeholder="조건"
-                                            value={condition.conditionText}
-                                            onChange={(e) => {
-                                                const updatedConditions = [...selectedRule.conditions];
-                                                updatedConditions[index] = {
-                                                    ...condition,
-                                                    conditionText: e.target.value
-                                                };
-                                                setSelectedRule({
-                                                    ...selectedRule,
-                                                    conditions: updatedConditions
-                                                });
-                                            }}
-                                            className="input-field"
-                                        />
-                                        <textarea
-                                            placeholder="조건 응답"
-                                            value={condition.response}
-                                            onChange={(e) => {
-                                                const updatedConditions = [...selectedRule.conditions];
-                                                updatedConditions[index] = {
-                                                    ...condition,
-                                                    response: e.target.value
-                                                };
-                                                setSelectedRule({
-                                                    ...selectedRule,
-                                                    conditions: updatedConditions
-                                                });
-                                            }}
-                                            className="textarea-field"
-                                            rows="2"
-                                        />
-                                        <button 
-                                            onClick={() => {
-                                                const updatedConditions = selectedRule.conditions.filter((_, i) => i !== index);
-                                                setSelectedRule({
-                                                    ...selectedRule,
-                                                    conditions: updatedConditions
-                                                });
-                                            }}
-                                            className="button-small delete"
-                                        >
-                                            삭제
-                                        </button>
-                                    </div>
-                                ))}
-                                
+            {openDialog && selectedRule && (
+                <div className="modal show d-block" style={{backgroundColor: 'rgba(0,0,0,0.5)'}}>
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">규칙 수정</h5>
                                 <button 
-                                    onClick={() => {
-                                        setSelectedRule({
+                                    type="button" 
+                                    className="btn-close"
+                                    onClick={() => setOpenDialog(false)}
+                                ></button>
+                            </div>
+                            <div className="modal-body">
+                                <div className="mb-3">
+                                    <label className="form-label">트리거 단어</label>
+                                    <input
+                                        type="text"
+                                        value={selectedRule.triggerWords}
+                                        onChange={(e) => setSelectedRule({
                                             ...selectedRule,
-                                            conditions: [
-                                                ...selectedRule.conditions,
-                                                { conditionText: '', response: '' }
-                                            ]
-                                        });
-                                    }}
-                                    className="button-small"
-                                >
-                                    새 조건 추가
-                                </button>
-
-                                <div className="default-response">
-                                    <h3>기본 응답</h3>
+                                            triggerWords: e.target.value
+                                        })}
+                                        className="form-control"
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <label className="form-label">응답</label>
                                     <textarea
-                                        placeholder="조건에 해당하지 않을 때의 기본 응답을 입력하세요"
                                         value={selectedRule.response}
                                         onChange={(e) => setSelectedRule({
-                                            ...selectedRule, 
+                                            ...selectedRule,
                                             response: e.target.value
                                         })}
-                                        className="textarea-field"
-                                        rows="4"
+                                        className="form-control"
+                                        rows="3"
                                     />
                                 </div>
                             </div>
-                        ) : (
-                            <textarea
-                                value={selectedRule.response}
-                                onChange={(e) => setSelectedRule({
-                                    ...selectedRule, 
-                                    response: e.target.value
-                                })}
-                                className="textarea-field"
-                                rows="4"
-                            />
-                        )}
-                        
-                        <div className="modal-buttons">
-                            <button 
-                                onClick={() => setOpenDialog(false)}
-                                className="button-small"
-                            >
-                                취소
-                            </button>
-                            <button 
-                                onClick={handleUpdateRule}
-                                className="button-small"
-                            >
-                                저장
-                            </button>
+                            <div className="modal-footer">
+                                <button 
+                                    type="button" 
+                                    className="btn btn-secondary"
+                                    onClick={() => setOpenDialog(false)}
+                                >
+                                    취소
+                                </button>
+                                <button 
+                                    type="button" 
+                                    className="btn btn-primary"
+                                    onClick={handleUpdateRule}
+                                >
+                                    저장
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

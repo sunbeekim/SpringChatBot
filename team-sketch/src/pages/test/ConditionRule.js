@@ -15,76 +15,84 @@ const ConditionRule = ({
     );
 
     return (
-        <div className="rules-section">
-            <h3>조건부 응답 규칙 목록</h3>
-            {isSelectionMode && conditionalRules.length > 0 && (
-                <div className="select-all-container">
-                    <label className="select-all-label">
+        <div className="card mb-4">
+            <div className="card-header d-flex justify-content-between align-items-center">
+                <h3 className="mb-0">조건부 응답 규칙 목록</h3>
+                {isSelectionMode && conditionalRules.length > 0 && (
+                    <div className="form-check">
                         <input
                             type="checkbox"
-                            className="select-all-checkbox"
+                            className="form-check-input"
                             checked={conditionalRules.every(rule => selectedRules.includes(rule.id))}
                             onChange={() => handleSelectAllRules('conditional')}
+                            id="selectAllConditional"
                         />
-                        전체 선택
-                    </label>
-                </div>
-            )}
-            <div className="rules-table">
-                <table>
-                    <thead>
-                        <tr>
-                            {isSelectionMode && <th width="50px"></th>}
-                            <th>트리거 단어</th>
-                            <th>기본 응답</th>
-                            <th>조건부 응답</th>
-                            <th width="150px">작업</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {conditionalRules.map((rule) => (
-                            <tr key={rule.id}>
-                                {isSelectionMode && (
-                                    <td>
-                                        <input
-                                            type="checkbox"
-                                            className="rule-checkbox"
-                                            checked={selectedRules.includes(rule.id)}
-                                            onChange={() => handleSelectRule(rule.id)}
-                                        />
-                                    </td>
-                                )}
-                                <td>{rule.triggerWords.join(', ')}</td>
-                                <td>{rule.response}</td>
-                                <td>
-                                    <div className="conditions-list">
-                                        {rule.conditions.map((condition, index) => (
-                                            <div key={index} className="condition-item">
-                                                <strong>{condition.conditionText}:</strong> {condition.response}
-                                            </div>
-                                        ))}
-                                    </div>
-                                </td>
-                                <td>
-                                    <div className="button-group">
-                                        <button 
-                                            onClick={() => handleEditRule(rule)}
-                                            className="button-small edit"
-                                        >
-                                            수정
-                                        </button>
-                                        <button 
-                                            onClick={() => handleDeleteRule(rule.id)}
-                                            className="button-small delete"
-                                        >
-                                            삭제
-                                        </button>
-                                    </div>
-                                </td>
+                        <label className="form-check-label" htmlFor="selectAllConditional">
+                            전체 선택
+                        </label>
+                    </div>
+                )}
+            </div>
+            <div className="card-body">
+                <div className="table-responsive">
+                    <table className="table table-hover">
+                        <thead className="table-light">
+                            <tr>
+                                {isSelectionMode && <th width="50px"></th>}
+                                <th>트리거 단어</th>
+                                <th>기본 응답</th>
+                                <th>조건부 응답</th>
+                                <th width="150px">작업</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {conditionalRules.map((rule) => (
+                                <tr key={rule.id}>
+                                    {isSelectionMode && (
+                                        <td>
+                                            <div className="form-check">
+                                                <input
+                                                    type="checkbox"
+                                                    className="form-check-input"
+                                                    checked={selectedRules.includes(rule.id)}
+                                                    onChange={() => handleSelectRule(rule.id)}
+                                                />
+                                            </div>
+                                        </td>
+                                    )}
+                                    <td>{rule.triggerWords.join(', ')}</td>
+                                    <td>{rule.response}</td>
+                                    <td>
+                                        <div className="d-flex flex-column gap-2">
+                                            {rule.conditions.map((condition, index) => (
+                                                <div key={index} className="p-2 bg-light rounded">
+                                                    <strong className="text-primary">{condition.conditionText}:</strong>
+                                                    <div className="ms-2">{condition.response}</div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div className="d-flex gap-2">
+                                            <button 
+                                                onClick={() => handleEditRule(rule)}
+                                                className="btn btn-outline-primary btn-sm"
+                                            >
+                                                수정
+                                            </button>
+                                            <button 
+                                                onClick={() => handleDeleteRule(rule.id)}
+                                                className="btn btn-outline-danger btn-sm"
+                                            >
+                                                삭제
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     );

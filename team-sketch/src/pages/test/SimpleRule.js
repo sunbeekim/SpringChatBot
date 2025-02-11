@@ -15,68 +15,73 @@ const SimpleRule = ({
     );
 
     return (
-        <div className="rules-section">
-            <div className="section-header">
-                <h3>단순 응답 규칙 목록</h3>
-            </div>
-            {isSelectionMode && simpleRules.length > 0 && (
-                <div className="select-all-container">
-                    <label className="select-all-label">
+        <div className="card mb-4">
+            <div className="card-header d-flex justify-content-between align-items-center">
+                <h3 className="mb-0">단순 응답 규칙 목록</h3>
+                {isSelectionMode && simpleRules.length > 0 && (
+                    <div className="form-check">
                         <input
                             type="checkbox"
-                            className="select-all-checkbox"
+                            className="form-check-input"
                             checked={simpleRules.every(rule => selectedRules.includes(rule.id))}
                             onChange={() => handleSelectAllRules('simple')}
+                            id="selectAllSimple"
                         />
-                        전체 선택
-                    </label>
-                </div>
-            )}
-            <div className="rules-table">
-                <table>
-                    <thead>
-                        <tr>
-                            {isSelectionMode && <th width="50px"></th>}
-                            <th>트리거 단어</th>
-                            <th>응답 내용</th>
-                            <th width="150px">작업</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {simpleRules.map((rule) => (
-                            <tr key={rule.id}>
-                                {isSelectionMode && (
-                                    <td>
-                                        <input
-                                            type="checkbox"
-                                            className="rule-checkbox"
-                                            checked={selectedRules.includes(rule.id)}
-                                            onChange={() => handleSelectRule(rule.id)}
-                                        />
-                                    </td>
-                                )}
-                                <td>{rule.triggerWords.join(', ')}</td>
-                                <td>{rule.response}</td>
-                                <td>
-                                    <div className="button-group">
-                                        <button 
-                                            onClick={() => handleEditRule(rule)}
-                                            className="button-small edit"
-                                        >
-                                            수정
-                                        </button>
-                                        <button 
-                                            onClick={() => handleDeleteRule(rule.id)}
-                                            className="button-small delete"
-                                        >
-                                            삭제
-                                        </button>
-                                    </div>
-                                </td>
+                        <label className="form-check-label" htmlFor="selectAllSimple">
+                            전체 선택
+                        </label>
+                    </div>
+                )}
+            </div>
+            <div className="card-body">
+                <div className="table-responsive">
+                    <table className="table table-hover">
+                        <thead className="table-light">
+                            <tr>
+                                {isSelectionMode && <th width="50px"></th>}
+                                <th>트리거 단어</th>
+                                <th>응답 내용</th>
+                                <th width="150px">작업</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {simpleRules.map((rule) => (
+                                <tr key={rule.id}>
+                                    {isSelectionMode && (
+                                        <td>
+                                            <div className="form-check">
+                                                <input
+                                                    type="checkbox"
+                                                    className="form-check-input"
+                                                    checked={selectedRules.includes(rule.id)}
+                                                    onChange={() => handleSelectRule(rule.id)}
+                                                />
+                                            </div>
+                                        </td>
+                                    )}
+                                    <td>{rule.triggerWords.join(', ')}</td>
+                                    <td>{rule.response}</td>
+                                    <td>
+                                        <div className="d-flex gap-2">
+                                            <button 
+                                                onClick={() => handleEditRule(rule)}
+                                                className="btn btn-outline-primary btn-sm"
+                                            >
+                                                수정
+                                            </button>
+                                            <button 
+                                                onClick={() => handleDeleteRule(rule.id)}
+                                                className="btn btn-outline-danger btn-sm"
+                                            >
+                                                삭제
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     );

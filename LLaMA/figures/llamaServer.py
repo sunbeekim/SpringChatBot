@@ -5,6 +5,7 @@ import torch
 from typing import Dict
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
+import re
 
 app = FastAPI()
 
@@ -90,8 +91,9 @@ async def chat(request: ChatRequest) -> Dict[str, str]:
         # 응답 디코딩 및 프롬프트 제거
         response = tokenizer.decode(outputs[0], skip_special_tokens=True)
         response = response.split("<assistant>")[-1].strip()
-        
-        return {"response": response}
+        clean_response = re.sub(r"</?[a-zA-Z0-9]+>", "", response).strip()
+        print(clean_response)
+        return {"response": clean_response}
     except Exception as e:
         print(f"에러 발생: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))

@@ -23,13 +23,13 @@ public class DeepSeekController {
         System.out.println("요청 데이터: " + request);
         
         String message = (String) request.get("message");
+        String sessionId = request.getOrDefault("sessionId", "default").toString();
         
-        String response = deepSeekService.chat(message);
+        String response = deepSeekService.chat(message, sessionId);
         
         System.out.println("DeepSeekService 응답: " + response);
         System.out.println("=== DeepSeekController 처리 완료 ===");
         
-
         return ResponseEntity.ok(Map.of("response", response));
     }
 } 

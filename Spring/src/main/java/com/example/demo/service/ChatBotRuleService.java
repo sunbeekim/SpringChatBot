@@ -161,10 +161,6 @@ public class ChatBotRuleService {
         if (ruleData.containsKey("applied")) dto.setApplied((Boolean) ruleData.get("applied"));
         if (ruleData.containsKey("appliedAt")) dto.setAppliedAt((LocalDateTime) ruleData.get("appliedAt"));
         
-        // 수정 정보 업데이트
-        dto.setLastModifiedBy((String) ruleData.get("lastModifiedBy"));
-        dto.setLastModifiedAt((LocalDateTime) ruleData.get("lastModifiedAt"));
-        
         System.out.println("수정할 DTO: " + dto);
         
         ChatBotRule model = convertToModel(dto);
