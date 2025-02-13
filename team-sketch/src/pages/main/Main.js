@@ -3,11 +3,14 @@ import { Routes, Route } from 'react-router-dom';
 import './Main.css';
 import Header from './Header';
 import Home from '../home/Home';
-import Test from '../test/Test';
-import Test2 from '../test/Test2';
-import Test3 from '../test/Test3';
+import Crawling from '../test/Crwaling';
+import Llama from '../test/Llama';
+import DeepSeek from '../test/DeepSeek';
 import Rule from '../test/Rule';
 import ChatBot from '../test/ChatBot';
+import AudioUpload from '../test/AudioUpload';
+import PictureUpload from '../test/PictureUpload';
+import CloudChatBot from '../test/CloudChatBot';
 
 const Main = () => {
   return (
@@ -18,9 +21,12 @@ const Main = () => {
           <Route path="/" element={<Home />} />
           <Route path="/chatbot" element={<ChatBot />} />
           <Route path="/rule" element={<Rule />} />
-          <Route path="/test" element={<Test />} />
-          <Route path="/test2" element={<Test2 />} />
-          <Route path="/test3" element={<Test3 />} />
+          <Route path="/crawling" element={<Crawling />} />
+          <Route path="/llama" element={<Llama />} />
+          <Route path="/deepseek" element={<DeepSeek />} />
+          <Route path="/audio-upload" element={<AudioUpload />} />
+          <Route path="/picture-upload" element={<PictureUpload />} />
+          <Route path="/cloudchatbot" element={<CloudChatBot />} />
         </Routes>
       </main>
     </div>

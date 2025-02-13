@@ -2,7 +2,7 @@ import { CrawlRequest, CrawlStop, TxtDownload } from '../../api/testAPI';
 import Loding from '../../utils/LoadingSVG';
 import { useState } from 'react';
 
-const Test = () => {
+const Crwaling = () => {
   const [inputValue, setInputValue] = useState(''); // 입력값 상태
   const [inputUrl, setInputUrl] = useState('');
 
@@ -227,4 +227,4 @@ const Test = () => {
   );
 };
 
-export default Test;
+export default Crwaling;

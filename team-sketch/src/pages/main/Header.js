@@ -21,16 +21,28 @@ const Header = () => {
     },
 
     {
-      label: '테스트',
-      onClick: () => navigate('/test')
+      label: '크롤링',
+      onClick: () => navigate('/crawling')
     },
     {
-      label: '테스트2',
-      onClick: () => navigate('/test2')
+      label: 'LlamaAI',
+      onClick: () => navigate('/llama')
     },
     {
-      label: '테스트3',
-      onClick: () => navigate('/test3')
+      label: 'DeepSeekAI',
+      onClick: () => navigate('/deepseek')
+    },
+    {
+      label: '음성 파일 업로드',
+      onClick: () => navigate('/audio-upload')
+    },
+    {
+      label: '사진 업로드',
+      onClick: () => navigate('/picture-upload')
+    },
+    {
+      label: '클라우드 챗봇',
+      onClick: () => navigate('/cloudchatbot')
     }
   ];
 

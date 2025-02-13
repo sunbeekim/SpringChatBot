@@ -32,7 +32,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	
 	implementation 'org.springframework.boot:spring-boot-starter-security'  // Spring Security
-  implementation 'org.springframework.boot:spring-boot-starter-web'       // Web 모듈 (CORS 설정 포함)
+  	implementation 'org.springframework.boot:spring-boot-starter-web'       // Web 모듈 (CORS 설정 포함)
 
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.4'
@@ -42,18 +42,21 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 
 	// jakarta
-  implementation 'jakarta.persistence:jakarta.persistence-api:3.1.0'
-  implementation 'jakarta.annotation:jakarta.annotation-api:2.1.1'
+ 	implementation 'jakarta.persistence:jakarta.persistence-api:3.1.0'
+ 	implementation 'jakarta.annotation:jakarta.annotation-api:2.1.1'
 
 	implementation 'org.python:jython-standalone:2.7.3'
 
 	// Jackson 의존성 추가 (최신 버전으로 통일)
-  implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
-  implementation 'com.fasterxml.jackson.core:jackson-core:2.15.2'
-  implementation 'com.fasterxml.jackson.core:jackson-annotations:2.15.2'
+  	implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+  	implementation 'com.fasterxml.jackson.core:jackson-core:2.15.2'
+  	implementation 'com.fasterxml.jackson.core:jackson-annotations:2.15.2'
     
-  // HTTP 클라이언트
-  implementation 'com.squareup.okhttp3:okhttp:4.9.1'
+  	// HTTP 클라이언트
+  	implementation 'com.squareup.okhttp3:okhttp:4.9.1'
+
+  	// JSON 처리
+  	implementation 'org.json:json:20231013'
 
 }
 

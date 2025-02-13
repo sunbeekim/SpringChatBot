@@ -63,6 +63,7 @@ export const TxtDownload = async (filePath) => {
     throw error;
   }
 };
+//===============================================================================================//
 
 // LLaMA 채팅 API
 export const LlamaChat = async (message) => {
@@ -93,6 +94,17 @@ export const ChatBotChat = async (message) => {
     throw error;
   }
 };
+
+// Cloud ChatBot API
+export const CloudChatBotChat = async (message) => {
+  try {
+    const response = await axios.post(`${SPRING_API_BASE_URL}/cloudchatbot/chat`, { message });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 
 //===============================================================================================//
 // 규칙 목록 조회
@@ -183,3 +195,15 @@ export const getAppliedRules = async () => {
   }
 };
 
+export const CloudOCR = async (formData) => {
+  try {
+    const response = await axios.post(`${SPRING_API_BASE_URL}/ocr/process`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
