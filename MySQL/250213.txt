@@ -1,0 +1,77 @@
+use project_db;
+
+select * 
+from chat_messages;
+
+select * 
+from chat_bot_rules;
+-- chat_bot_rule_conditions
+-- chat_bot_rules
+
+show tables;
+-- drop table admin_e7d61be9_crawl_results;
+
+SET @tables = (
+    SELECT GROUP_CONCAT(table_name)
+    FROM information_schema.tables
+    WHERE table_schema = DATABASE()
+    AND table_name LIKE 'subadmin_%'
+);
+
+SET @drop_stmt = CONCAT('DROP TABLE IF EXISTS ', @tables);
+PREPARE stmt FROM @drop_stmt;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+CREATE TABLE IF NOT EXISTS user_conditions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    search_word VARCHAR(255) NOT NULL,
+    deep VARCHAR(10),                           -- deep 컬럼 추가
+    table_name VARCHAR(255) NOT NULL,
+    mapper_path VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_username (username),
+    INDEX idx_search_cache (username, search_word, deep)  -- 캐시 조회를 위한 복합 인덱스 추가
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- 기본 규칙 테이블
+CREATE TABLE chat_bot_rules (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    type VARCHAR(20) NOT NULL,  -- 'simple' 또는 'conditional'
+    trigger_words TEXT NOT NULL, -- 쉼표로 구분된 트리거 단어들
+    response TEXT,              -- 기본 응답 또는 단순 응답
+    role_id INT,               -- 규칙 생성자의 역할 ID
+    username VARCHAR(50),       -- 규칙 생성자의 사용자명
+    is_applied BOOLEAN DEFAULT FALSE, -- 규칙 적용 여부
+    applied_at TIMESTAMP,      -- 규칙이 적용된 시간
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+ALTER TABLE chat_bot_rules 
+ADD COLUMN last_modified_by VARCHAR(255),
+ADD COLUMN last_modified_at TIMESTAMP;
+
+-- 조건부 응답을 위한 테이블
+CREATE TABLE chat_bot_rule_conditions (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    rule_id BIGINT NOT NULL,    -- chat_bot_rules 테이블의 FK
+    condition_text VARCHAR(255) NOT NULL, -- 조건 단어/문구
+    response TEXT NOT NULL,      -- 조건에 해당하는 응답
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (rule_id) REFERENCES chat_bot_rules(id) ON DELETE CASCADE
+);
+
+CREATE TABLE chat_messages (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    role_id INT NOT NULL,
+    message_type VARCHAR(20) NOT NULL,  -- 'user' 또는 'assistant'
+    content TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    session_id VARCHAR(100) NOT NULL    -- 대화 세션 구분용
+);
+
+CREATE INDEX idx_chat_messages_username ON chat_messages(username);
+CREATE INDEX idx_chat_messages_session ON chat_messages(session_id);
