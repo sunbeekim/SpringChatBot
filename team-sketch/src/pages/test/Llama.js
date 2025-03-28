@@ -7,22 +7,28 @@ const Llama = () => {
   const [isChatLoading, setIsChatLoading] = useState(false);
 
   const handleSendMessage = async (message) => {
-    setMessages(prev => [...prev, { role: 'user', content: message }]);
+    setMessages((prev) => [...prev, { role: 'user', content: message }]);
     setIsChatLoading(true);
 
     try {
       const data = await LlamaChat(message);
-      setMessages(prev => [...prev, { 
-        role: 'assistant', 
-        content: data.response 
-      }]);
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: 'assistant',
+          content: data.response
+        }
+      ]);
       console.log(data.response);
     } catch (error) {
       console.error('LLaMA 채팅 에러:', error);
-      setMessages(prev => [...prev, { 
-        role: 'system', 
-        content: '죄송합니다. 오류가 발생했습니다.' 
-      }]);
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: 'system',
+          content: '죄송합니다. 오류가 발생했습니다.'
+        }
+      ]);
     } finally {
       setIsChatLoading(false);
     }
@@ -40,4 +46,3 @@ const Llama = () => {
 };
 
 export default Llama;
-    
